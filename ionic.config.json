@@ -1,0 +1,7 @@
+{
+  "name": "InternTrack",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
