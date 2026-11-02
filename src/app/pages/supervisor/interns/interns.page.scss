@@ -1,0 +1,224 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: #222222;
+}
+
+.interns-container {
+  width: 100%;
+  min-height: 100%;
+  padding: 62px 30px;
+  box-sizing: border-box;
+  background: #f4f6fc;
+}
+
+// intern cards grid
+
+.interns-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 20px;
+  width: 100%;
+}
+
+// intern card
+
+.intern-card {
+  min-width: 0;
+  min-height: 269px;
+  padding: 29px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 21px;
+  box-shadow: 0 2px 5px rgba(37, 66, 130, 0.06);
+}
+
+// intern header
+
+.intern-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 65px;
+}
+
+.intern-heading {
+  min-width: 0;
+
+  h2 {
+    margin: 0 0 6px;
+    color: #222222;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    color: #888888;
+    font-size: 12px;
+  }
+}
+
+// status badges
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  height: 24px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &.on-track {
+    background: #d6e9ff;
+    color: #315be5;
+  }
+
+  &.at-risk {
+    background: #ff5b62;
+    color: #ffffff;
+  }
+
+  &.ahead {
+    background: #a4f8bb;
+    color: #168b42;
+  }
+}
+
+// progress section
+
+.progress-section {
+  margin-top: 13px;
+  margin-bottom: 20px;
+}
+
+.progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+
+  span {
+    color: #888888;
+    font-size: 12px;
+  }
+
+  strong {
+    color: #222222;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+// progress bar
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  background: #d9d9d9;
+  border-radius: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #3155df;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+// intern information
+
+.intern-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  min-height: 80px;
+  padding: 13px 17px;
+  box-sizing: border-box;
+  background: #f1f3fc;
+  border-radius: 9px;
+
+  p {
+    margin: 0;
+    color: #555555;
+    font-size: 10px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+
+    strong {
+      color: #222222;
+      font-weight: 600;
+    }
+  }
+}
+
+// responsive design
+
+@media (max-width: 1100px) {
+  .interns-container {
+    padding: 35px 25px;
+  }
+
+  .interns-grid {
+    gap: 18px;
+  }
+
+  .intern-card {
+    padding: 23px;
+  }
+}
+
+@media (max-width: 800px) {
+  .interns-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .intern-card {
+    min-height: auto;
+  }
+
+  .progress-section {
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 500px) {
+  .interns-container {
+    padding: 20px 15px;
+  }
+
+  .intern-card {
+    padding: 20px;
+  }
+
+  .intern-header {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .intern-heading h2 {
+    font-size: 14px;
+  }
+
+  .progress-label {
+    align-items: flex-start;
+
+    strong {
+      font-size: 10px;
+    }
+  }
+}

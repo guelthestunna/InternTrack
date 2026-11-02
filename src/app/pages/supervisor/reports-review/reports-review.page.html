@@ -1,0 +1,181 @@
+<div class="reports-container">
+
+  <!-- intern selector -->
+  <section class="intern-selector">
+
+    <span class="selector-label">Select Intern:</span>
+
+    <button
+      type="button"
+      *ngFor="let intern of interns"
+      class="intern-tab"
+      [class.active]="selectedInternId === intern.id"
+      (click)="selectIntern(intern.id)">
+
+      {{ intern.name }}
+
+    </button>
+
+  </section>
+
+  <!-- report content -->
+  <section class="reports-content">
+
+    <!-- reports list -->
+    <aside class="reports-list-card">
+
+      <h2>Reports List</h2>
+
+      <button
+        type="button"
+        *ngFor="let week of weeks"
+        class="week-item"
+        [class.active]="selectedWeek === week"
+        (click)="selectWeek(week)">
+
+        {{ week }}
+
+      </button>
+
+    </aside>
+
+    <!-- report details -->
+    <main class="report-card" *ngIf="selectedIntern">
+
+      <!-- report header -->
+      <div class="report-header">
+
+        <div>
+          <h2>{{ report.weekLabel }}</h2>
+          <p>{{ report.submittedDate }}</p>
+        </div>
+
+        <span
+          class="report-status"
+          [class.approved]="report.status === 'Approved'"
+          [class.returned]="report.status === 'Returned'">
+
+          {{ report.status }}
+
+        </span>
+
+      </div>
+
+      <!-- report body -->
+      <div class="report-body">
+
+        <!-- left: student report -->
+        <div class="report-information">
+
+          <!-- intern profile -->
+          <div class="intern-profile">
+
+            <div class="intern-avatar">
+              {{ selectedIntern.initials }}
+            </div>
+
+            <div>
+              <h3>{{ selectedIntern.name }}</h3>
+
+              <p>
+                {{ selectedIntern.id }} · {{ selectedIntern.department }}
+              </p>
+            </div>
+
+          </div>
+
+          <!-- report summary -->
+          <div class="report-summary">
+
+            <div class="summary-item">
+              <span>Hours logged</span>
+              <strong>{{ report.hoursLogged }}</strong>
+            </div>
+
+            <div class="summary-item">
+              <span>Days present</span>
+              <strong>{{ report.daysPresent }}</strong>
+            </div>
+
+            <div class="summary-item">
+              <span>DTR Status</span>
+              <strong>{{ report.dtrStatus }}</strong>
+            </div>
+
+          </div>
+
+          <!-- activities completed -->
+          <div class="report-section">
+
+            <h3>Work/Activities Completed</h3>
+
+            <div class="report-text">
+              {{ report.activities }}
+            </div>
+
+          </div>
+
+          <!-- student reflection -->
+          <div class="report-section">
+
+            <h3>Student Reflection</h3>
+
+            <div class="report-text">
+              {{ report.reflection }}
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- right: supervisor review -->
+        <div class="review-panel">
+
+          <h3>Your Review</h3>
+
+          <label for="reviewComment">Comment</label>
+
+          <textarea
+            id="reviewComment"
+            placeholder="Add feedback for {{ selectedIntern.name.split(' ')[0] }}..."
+            [value]="reviewComment"
+            (input)="onCommentChange($event)">
+          </textarea>
+
+          <p class="comment-note">
+            {{ selectedIntern.name.split(' ')[0] }} will see this comment if the report is returned.
+          </p>
+
+          <div class="review-actions">
+
+            <button
+              type="button"
+              class="approve-button"
+              (click)="approveReport()"
+              [disabled]="report.status === 'Approved'">
+
+              Approve Report
+
+            </button>
+
+            <button
+              type="button"
+              class="return-button"
+              (click)="returnReport()"
+              [disabled]="report.status === 'Returned'">
+
+              Return
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </section>
+
+</div>

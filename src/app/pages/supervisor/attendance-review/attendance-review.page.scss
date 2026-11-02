@@ -1,0 +1,323 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #222222;
+}
+
+.attendance-container {
+  width: 100%;
+  min-height: 100%;
+  padding: 62px 45px;
+  box-sizing: border-box;
+  background: #f4f6fc;
+}
+
+// intern selector
+
+.intern-selector {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-height: 84px;
+  padding: 16px 28px;
+  margin-bottom: 36px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 21px;
+  box-shadow: 0 2px 4px rgba(37, 66, 130, 0.06);
+}
+
+.selector-label {
+  margin-right: 8px;
+  color: #999999;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.intern-tab {
+  padding: 9px 13px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #aaaaaa;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover:not(.active) {
+    background: #f3f6fc;
+    color: #3155df;
+  }
+
+  &.active {
+    background: #3155df;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}
+
+// attendance card
+
+.attendance-card {
+  width: 100%;
+  padding: 27px 28px 28px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #dedee3;
+  border-radius: 21px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+// intern header
+
+.intern-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 26px;
+}
+
+.intern-details {
+  h2 {
+    margin: 0 0 5px;
+    color: #222222;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #888888;
+    font-size: 11px;
+  }
+}
+
+.rendered-hours {
+  padding-top: 1px;
+  color: #777777;
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+// table
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #dce2e9;
+  border-radius: 18px;
+}
+
+.attendance-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead {
+    background: #f0f7fd;
+
+    th {
+      height: 44px;
+      padding: 0 15px;
+      border-bottom: 1px solid #d6dce3;
+      color: #777777;
+      font-size: 11px;
+      font-weight: 600;
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      height: 60px;
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: #fafcff;
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #dedede;
+      }
+    }
+
+    td {
+      padding: 0 15px;
+      color: #292929;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+  }
+}
+
+// date
+
+.date-cell {
+  span {
+    color: #888888;
+  }
+}
+
+// time and hours
+
+.active-time {
+  color: #ff852d;
+}
+
+.hours-value {
+  color: #3155df;
+  font-weight: 500;
+
+  &.no-hours {
+    letter-spacing: 2px;
+  }
+}
+
+// photo
+
+.photo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #3155df;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+
+  ion-icon {
+    display: block;
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    color: #3155df;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// location
+
+.location-cell {
+  color: #555555;
+}
+
+// status badges
+
+.status-badge {
+  display: inline-block;
+  min-width: 80px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+
+  &.provisional {
+    background: #ffe1cc;
+    color: #e36d1e;
+  }
+
+  &.verified {
+    background: #a7f9bd;
+    color: #168b42;
+  }
+}
+
+// action
+
+.action-cell {
+  text-align: center;
+}
+
+.verify-button {
+  min-width: 57px;
+  height: 24px;
+  padding: 0 10px;
+  background: #3155df;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #2547c8;
+  }
+}
+
+// responsive
+
+@media (max-width: 1100px) {
+  .attendance-container {
+    padding: 35px 25px;
+  }
+
+  .intern-selector {
+    gap: 5px;
+  }
+
+  .intern-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rendered-hours {
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  .attendance-container {
+    padding: 20px 15px;
+  }
+
+  .intern-selector {
+    align-items: flex-start;
+    padding: 18px;
+    gap: 8px;
+  }
+
+  .selector-label {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .intern-tab {
+    white-space: normal;
+    text-align: left;
+  }
+
+  .attendance-card {
+    padding: 20px 14px;
+  }
+
+  .intern-details h2 {
+    font-size: 15px;
+  }
+
+  .rendered-hours {
+    font-size: 11px;
+    white-space: normal;
+  }
+}

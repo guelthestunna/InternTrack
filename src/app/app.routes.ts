@@ -140,14 +140,6 @@ export const routes: Routes = [
             .then(m => m.ReportsReviewPage)
       },
 
-      // intern evaluation
-      {
-        path: 'evaluation',
-        loadComponent: () =>
-          import('./pages/supervisor/evaluation/evaluation.page')
-            .then(m => m.EvaluationPage)
-      },
-
       // intern roster
       {
         path: 'interns',

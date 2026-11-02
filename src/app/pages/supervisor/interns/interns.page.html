@@ -1,0 +1,79 @@
+<div class="interns-container">
+
+  <!-- interns grid -->
+  <section class="interns-grid">
+
+    <article
+      class="intern-card"
+      *ngFor="let intern of interns">
+
+      <!-- intern header -->
+      <div class="intern-header">
+
+        <div class="intern-heading">
+          <h2>{{ intern.name }}</h2>
+
+          <p>
+            {{ intern.id }} · BS Information Technology
+          </p>
+        </div>
+
+        <span
+          class="status-badge"
+          [ngClass]="intern.statusClass">
+
+          {{ intern.status }}
+
+        </span>
+
+      </div>
+
+      <!-- progress -->
+      <div class="progress-section">
+
+        <div class="progress-label">
+          <span>Progress:</span>
+
+          <strong>
+            {{ intern.completedHours.toFixed(1) }} /
+            {{ intern.requiredHours }}h
+            ({{ intern.progress.toFixed(1) }}%)
+          </strong>
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            [style.width.%]="intern.progress">
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- intern information -->
+      <div class="intern-information">
+
+        <p>
+          <strong>Division:</strong>
+          {{ intern.division }}
+        </p>
+
+        <p>
+          <strong>Email:</strong>
+          {{ intern.email }}
+        </p>
+
+        <p>
+          <strong>End Date:</strong>
+          {{ intern.endDate }}
+        </p>
+
+      </div>
+
+    </article>
+
+  </section>
+
+</div>

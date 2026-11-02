@@ -1,45 +1,42 @@
-// design variables
+
 :host {
   --primary: #3157d5;
   --primary-dark: #2448b8;
-  --primary-light: #edf2ff;
+  --primary-light: #e7f1fc;
 
   --accent: #ff9638;
 
-  --background: #f5f7fc;
+  --background: #f4f6fc;
   --surface: #ffffff;
 
-  --text-primary: #20242d;
-  --text-secondary: #71819f;
-  --text-muted: #a0aabd;
+  --text-primary: #222222;
+  --text-secondary: #888888;
+  --text-muted: #aaaaaa;
 
-  --border: #e7ebf4;
-  --sidebar-width: 275px;
+  --border: #d5d5d5;
+  --sidebar-width: 270px;
 
   display: block;
   width: 100%;
   height: 100%;
-
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
 }
 
-
 // main layout
+
 .supervisor-shell {
   display: flex;
   width: 100%;
   height: 100%;
   min-height: 0;
-
   overflow: hidden;
-
   background: var(--background);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
 }
 
-
 // sidebar
+
 .supervisor-sidebar {
   position: relative;
   z-index: 20;
@@ -51,10 +48,10 @@
   height: 100%;
   flex: 0 0 var(--sidebar-width);
 
-  padding: 28px 17px 22px;
+  padding: 30px 20px 28px;
   box-sizing: border-box;
 
-  background: rgba(255, 255, 255, 0.96);
+  background: #ffffff;
   border-right: 1px solid var(--border);
 
   overflow-x: hidden;
@@ -64,22 +61,21 @@
   scrollbar-color: #e0e5f0 transparent;
 }
 
-
 // branding
+
 .sidebar-brand {
   display: flex;
   align-items: center;
+  gap: 10px;
 
-  gap: 12px;
-  min-height: 52px;
-  padding: 0 10px;
+  min-height: 76px;
+  padding: 0 4px;
 }
 
 .brand-logo {
   display: block;
-  width: 43px;
-  height: 43px;
-
+  width: 64px;
+  height: 56px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -87,20 +83,19 @@
 .brand-information {
   display: flex;
   flex-direction: column;
-
   gap: 4px;
   min-width: 0;
 }
 
 .brand-information h1 {
   margin: 0;
-
-  font-size: 20px;
-  font-weight: 700;
+  font-family: 'Surgena', serif;
+  font-size: 24px;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.8px;
-
   color: var(--primary);
+  white-space: nowrap;
 }
 
 .brand-information h1 span {
@@ -109,44 +104,37 @@
 
 .brand-information p {
   margin: 0;
-
-  font-size: 11px;
-  font-weight: 500;
-
+  font-size: 12px;
+  font-weight: 400;
   color: var(--text-secondary);
 }
 
-
 // sidebar divider
+
 .sidebar-divider {
   width: calc(100% - 20px);
   height: 1px;
-
-  margin: 25px auto 27px;
-
+  margin: 25px auto 42px;
   background: var(--border);
   flex-shrink: 0;
 }
 
+// navigation
 
-// sidebar navigation
 .sidebar-navigation {
   display: flex;
   flex-direction: column;
-
   width: 100%;
   gap: 7px;
 }
 
 .navigation-heading {
-  margin: 0 0 13px;
-  padding-left: 15px;
-
-  font-size: 10px;
+  margin: 0 0 17px;
+  padding-left: 10px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 1.3px;
-
-  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  color: #b0b0b0;
 }
 
 .sidebar-link {
@@ -156,48 +144,44 @@
   align-items: center;
 
   width: 100%;
-  min-height: 50px;
+  min-height: 55px;
 
-  padding: 13px 15px;
+  padding: 13px 14px;
   box-sizing: border-box;
 
   border: 1px solid transparent;
-  border-radius: 13px;
+  border-radius: 14px;
 
   background: transparent;
-  color: var(--text-secondary);
+  color: #a5a5a5;
 
   text-decoration: none;
   cursor: pointer;
 
   transition:
-    background-color 220ms ease,
-    color 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease,
-    transform 220ms ease;
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .link-text {
   font-size: 13px;
   font-weight: 500;
   line-height: 1.4;
-  letter-spacing: -0.15px;
+  letter-spacing: -0.1px;
 }
 
-
 // navigation states
+
 .sidebar-link:hover {
-  background: #f3f6ff;
+  background: #f5f8fc;
   color: var(--primary);
 }
 
 .sidebar-link.is-active {
-  background: var(--primary-light);
-  color: var(--primary);
-
-  border-color: #dce5ff;
-  box-shadow: 0 3px 10px rgba(49, 87, 213, 0.055);
+  background: #e7f1fc;
+  color: #315be5;
+  border-color: #dce7f2;
 }
 
 .sidebar-link.is-active .link-text {
@@ -205,53 +189,101 @@
 }
 
 .sidebar-link:active {
-  transform: scale(0.985);
+  transform: scale(0.99);
 }
 
-
 // sidebar footer
+
 .sidebar-footer {
   width: 100%;
   margin-top: auto;
-
-  padding: 20px 13px 0;
+  padding: 20px 9px 0;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
-.footer-divider {
+.supervisor-profile {
+  display: flex;
+  align-items: center;
   width: 100%;
-  height: 1px;
-
-  margin-bottom: 22px;
-  background: var(--border);
+  gap: 14px;
+  min-height: 48px;
 }
 
-.footer-title {
-  margin: 0;
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+
+  border-radius: 50%;
+  background: #dce5ff;
+  color: #3155df;
 
   font-size: 12px;
   font-weight: 600;
-
-  color: var(--text-primary);
 }
 
-.footer-description {
-  margin: 5px 0 0;
+.profile-information {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
 
+.profile-information h3 {
+  margin: 0;
+  color: #222222;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.profile-information p {
+  margin: 0;
+  color: #999999;
   font-size: 10px;
   font-weight: 400;
-
-  color: var(--text-muted);
 }
 
+.logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #a6a6a6;
+
+  cursor: pointer;
+  transition: color 180ms ease;
+
+  ion-icon {
+    font-size: 23px;
+  }
+
+  &:hover {
+    color: var(--primary);
+  }
+}
 
 // main workspace
+
 .supervisor-workspace {
   display: flex;
   flex-direction: column;
 
   flex: 1;
-
   width: 100%;
   min-width: 0;
   min-height: 0;
@@ -259,8 +291,8 @@
   background: var(--background);
 }
 
-
 // top header
+
 .workspace-header {
   position: relative;
   z-index: 10;
@@ -270,28 +302,22 @@
   justify-content: space-between;
 
   width: 100%;
-  min-height: 80px;
+  min-height: 112px;
   flex-shrink: 0;
 
   gap: 20px;
-  padding: 17px 36px;
+  padding: 20px 36px 20px 30px;
   box-sizing: border-box;
 
-  background: rgba(255, 255, 255, 0.88);
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
-
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-
-  box-shadow: 0 2px 14px rgba(28, 47, 88, 0.025);
 }
 
-
 // header information
+
 .header-left {
   display: flex;
   align-items: center;
-
   gap: 15px;
   min-width: 0;
 }
@@ -299,29 +325,25 @@
 .header-information {
   display: flex;
   flex-direction: column;
-
   gap: 5px;
   min-width: 0;
 }
 
 .header-information h2 {
   margin: 0;
-
-  font-size: 18px;
-  font-weight: 650;
+  font-size: 22px;
+  font-weight: 700;
   line-height: 1.3;
-  letter-spacing: -0.5px;
-
+  letter-spacing: 0.2px;
   color: var(--text-primary);
 }
 
-
 // supervisor badge
+
 .header-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
   flex-shrink: 0;
 }
 
@@ -330,27 +352,28 @@
   align-items: center;
   justify-content: center;
 
-  padding: 10px 15px;
+  min-height: 38px;
+  padding: 0 23px;
 
-  border: 1px solid #dce5ff;
+  border: none;
   border-radius: 100px;
 
-  background: var(--primary-light);
-  color: var(--primary);
+  background: #bfdbf8;
+  color: #315be5;
 
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
 }
 
-
 // main content
+
 .workspace-main {
   flex: 1;
   min-height: 0;
 
   width: 100%;
-  padding: 32px 36px 45px;
+  padding: 22px 30px 45px;
   box-sizing: border-box;
 
   background: var(--background);
@@ -364,16 +387,14 @@
 
 .workspace-content {
   position: relative;
-
   width: 100%;
   max-width: 1360px;
-
   margin: 0 auto;
   box-sizing: border-box;
 }
 
-
 // mobile navigation
+
 .menu-button {
   display: none;
   align-items: center;
@@ -398,24 +419,33 @@
   display: none;
 }
 
-
 // keyboard accessibility
+
 .sidebar-link:focus-visible,
-.menu-button:focus-visible {
+.menu-button:focus-visible,
+.logout-button:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
 
+// responsive: small desktop
 
-// responsive - small desktop
 @media (max-width: 1200px) {
   :host {
-    --sidebar-width: 255px;
+    --sidebar-width: 250px;
   }
 
   .supervisor-sidebar {
-    padding-left: 14px;
-    padding-right: 14px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .brand-logo {
+    width: 60px;
+  }
+
+  .brand-information h1 {
+    font-size: 19px;
   }
 
   .workspace-header {
@@ -424,12 +454,12 @@
   }
 
   .workspace-main {
-    padding: 28px;
+    padding: 40px 28px 35px;
   }
 }
 
+// responsive: tablet
 
-// responsive - tablet
 @media (max-width: 900px) {
   .supervisor-sidebar {
     position: fixed;
@@ -438,7 +468,7 @@
     left: 0;
     bottom: 0;
 
-    width: 275px;
+    width: var(--sidebar-width);
     height: 100%;
 
     transform: translateX(-105%);
@@ -469,7 +499,6 @@
 
     background: rgba(26, 38, 65, 0.25);
 
-    -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
 
     z-index: 100;
@@ -481,20 +510,29 @@
   }
 
   .workspace-header {
-    min-height: 72px;
+    min-height: 80px;
     padding: 14px 24px;
   }
 
+  .header-information h2 {
+    font-size: 19px;
+  }
+
   .workspace-main {
-    padding: 25px 24px 35px;
+    padding: 30px 24px 35px;
   }
 }
 
+// responsive: mobile
 
-// responsive - mobile
 @media (max-width: 600px) {
   .workspace-header {
+    min-height: 72px;
     padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .header-left {
     gap: 10px;
   }
 
@@ -503,7 +541,8 @@
   }
 
   .supervisor-badge {
-    padding: 8px 10px;
+    min-height: 30px;
+    padding: 0 10px;
     font-size: 9px;
   }
 
@@ -512,10 +551,9 @@
   }
 }
 
+// responsive: small mobile
 
-// responsive - small mobile
 @media (max-width: 400px) {
-
   .header-information h2 {
     font-size: 14px;
   }
@@ -525,11 +563,12 @@
   }
 }
 
+// accessibility: reduced motion
 
-// accessibility - reduced motion
 @media (prefers-reduced-motion: reduce) {
   .sidebar-link,
-  .supervisor-sidebar {
+  .supervisor-sidebar,
+  .logout-button {
     transition: none;
   }
 }

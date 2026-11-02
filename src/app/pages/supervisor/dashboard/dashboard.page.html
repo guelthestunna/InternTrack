@@ -1,0 +1,152 @@
+<div class="dashboard-container">
+
+  <!-- summary cards -->
+  <section class="summary-grid">
+
+    <div class="summary-card" *ngFor="let card of summaryCards">
+
+      <div class="summary-label">
+        <span
+          *ngIf="card.hasIndicator"
+          class="orange-indicator">
+        </span>
+
+        {{ card.label }}
+      </div>
+
+      <h2>{{ card.value }}</h2>
+
+      <p>{{ card.description }}</p>
+
+    </div>
+
+  </section>
+
+  <!-- main dashboard content -->
+  <section class="dashboard-content">
+
+    <!-- today's attendance -->
+    <div class="attendance-card">
+
+      <div class="section-header">
+
+        <div>
+          <h2>Today's Attendance</h2>
+          <p>Camera photos and station check-ins</p>
+        </div>
+
+        <span class="attendance-date">
+          {{ attendanceDate }}
+        </span>
+
+      </div>
+
+      <!-- attendance list -->
+      <div class="attendance-list">
+
+        <div
+          class="attendance-item"
+          *ngFor="let intern of attendanceList">
+
+          <!-- intern profile -->
+          <div class="intern-profile">
+
+            <div class="avatar">
+              {{ intern.initials }}
+            </div>
+
+            <div class="intern-info">
+              <h3>{{ intern.name }}</h3>
+              <p>{{ intern.details }}</p>
+            </div>
+
+          </div>
+
+          <!-- attendance status -->
+          <div class="attendance-status">
+
+            <span
+              class="status-badge"
+              [ngClass]="intern.status === 'CLOCKED IN' ? 'clocked-in' : 'absent'">
+
+              {{ intern.status }}
+
+            </span>
+
+            <span class="time">
+              {{ intern.time }}
+            </span>
+
+          </div>
+
+          <!-- actions -->
+          <div class="attendance-actions">
+
+            <button
+              *ngIf="intern.hasPhoto"
+              class="photo-button"
+              type="button">
+
+              <ion-icon name="camera-outline"></ion-icon>
+              Photo
+
+            </button>
+
+            <button
+              *ngIf="intern.hasPhoto"
+              class="verify-button"
+              type="button">
+
+              VERIFY
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- quick actions -->
+    <aside class="quick-actions-card">
+
+      <h2>Quick Actions</h2>
+
+      <div class="quick-action-list">
+
+        <a
+          class="quick-action-item"
+          *ngFor="let action of quickActions"
+          [routerLink]="action.route">
+
+          <div>
+            <h3>{{ action.title }}</h3>
+            <p>{{ action.subtitle }}</p>
+          </div>
+
+          <span class="arrow">›</span>
+
+        </a>
+
+      </div>
+
+      <!-- ojt coordinator -->
+      <div class="coordinator-card">
+
+        <h3>OJT Coordinator</h3>
+
+        <p>Prof. Leng Alejandro</p>
+
+        <a href="mailto:lengalejandro@plv.edu.ph">
+          lengalejandro&#64;plv.edu.ph
+        </a>
+
+      </div>
+
+    </aside>
+
+  </section>
+
+</div>

@@ -1,0 +1,146 @@
+<div class="attendance-container">
+
+  <!-- intern selection -->
+  <section class="intern-selector">
+
+    <span class="selector-label">Select Intern:</span>
+
+    <button
+      type="button"
+      *ngFor="let intern of interns"
+      class="intern-tab"
+      [class.active]="selectedInternId === intern.id"
+      (click)="selectIntern(intern.id)">
+
+      {{ intern.name }}
+
+    </button>
+
+  </section>
+
+  <!-- attendance content -->
+  <section class="attendance-card" *ngIf="selectedIntern">
+
+    <!-- intern information -->
+    <div class="intern-header">
+
+      <div class="intern-details">
+        <h2>{{ selectedIntern.name }}</h2>
+
+        <p>
+          {{ selectedIntern.id }} · {{ selectedIntern.department }}
+        </p>
+      </div>
+
+      <div class="rendered-hours">
+        {{ selectedIntern.totalRendered }}h total rendered ·
+        {{ selectedIntern.totalVerified }}h verified
+      </div>
+
+    </div>
+
+    <!-- attendance table -->
+    <div class="table-wrapper">
+
+      <table class="attendance-table">
+
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>IN</th>
+            <th>OUT</th>
+            <th>HOURS</th>
+            <th>PHOTO</th>
+            <th>LOCATION</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let record of filteredAttendance">
+
+            <td class="date-cell">
+              {{ record.date }}
+              <span>({{ record.day }})</span>
+            </td>
+
+            <td>{{ record.timeIn }}</td>
+
+            <td>
+              <span
+                *ngIf="record.timeOut === 'Active'"
+                class="active-time">
+                Active
+              </span>
+
+              <span *ngIf="record.timeOut !== 'Active'">
+                {{ record.timeOut }}
+              </span>
+            </td>
+
+            <td>
+              <span
+                class="hours-value"
+                [class.no-hours]="record.hours === '--'">
+                {{ record.hours }}
+              </span>
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="photo-link"
+                *ngIf="record.photo">
+
+                <ion-icon name="camera-outline"></ion-icon>
+                View
+
+              </button>
+            </td>
+
+            <td class="location-cell">
+              {{ record.location }}
+            </td>
+
+            <td>
+              <span
+                class="status-badge"
+                [class.provisional]="record.status === 'PROVISIONAL'"
+                [class.verified]="record.status === 'VERIFIED'">
+
+                {{ record.status }}
+
+              </span>
+            </td>
+
+            <td class="action-cell">
+
+              <button
+                *ngIf="record.action === 'VERIFY'"
+                type="button"
+                class="verify-button"
+                (click)="verifyAttendance(record.id)">
+
+                VERIFY
+
+              </button>
+
+              <span *ngIf="record.action !== 'VERIFY'">
+                {{ record.action }}
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</div>

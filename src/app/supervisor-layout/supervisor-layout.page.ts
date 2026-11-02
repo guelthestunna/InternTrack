@@ -1,11 +1,15 @@
 import { Component, inject } from '@angular/core';
+import { IonIcon } from '@ionic/angular';
 import {
   Router,
   RouterOutlet,
   RouterLink,
   RouterLinkActive,
-  NavigationEnd
+  NavigationEnd,
 } from '@angular/router';
+
+import { addIcons } from 'ionicons';
+import { logOutOutline } from 'ionicons/icons';
 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
@@ -23,15 +27,15 @@ interface SupervisorNavItem {
   imports: [
     RouterOutlet,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    IonIcon,
   ],
   templateUrl: './supervisor-layout.page.html',
   styleUrls: ['./supervisor-layout.page.scss'],
   host: {
-    class: 'ion-page'
-  }
+    class: 'ion-page',
+  },
 })
-
 export class SupervisorLayoutComponent {
 
   // router
@@ -41,34 +45,35 @@ export class SupervisorLayoutComponent {
   isSidebarOpen = false;
 
   // current page
-  currentPageTitle = 'Dashboard & Quick Actions';
+  currentPageTitle = 'Dashboard';
 
   // navigation items
   readonly navItems: SupervisorNavItem[] = [
     {
-      label: 'Dashboard & Quick Actions',
-      path: '/supervisor/dashboard'
+      label: 'Dashboard',
+      path: '/supervisor/dashboard',
     },
     {
       label: 'DTR & Attendance Verification',
-      path: '/supervisor/attendance'
+      path: '/supervisor/attendance',
     },
     {
-      label: 'Weekly Accomplishment Reports',
-      path: '/supervisor/reports'
-    },
-    {
-      label: 'Intern Evaluation & Rubric',
-      path: '/supervisor/evaluation'
+      label: 'Weekly Reports',
+      path: '/supervisor/reports',
     },
     {
       label: 'Intern Roster & Progress',
-      path: '/supervisor/interns'
-    }
+      path: '/supervisor/interns',
+    },
   ];
 
-  // initialize routing
+  // initialize routing and icons
   constructor() {
+
+    addIcons({
+      logOutOutline,
+    });
+
     this.updatePageTitle(this.router.url);
 
     this.router.events
@@ -87,6 +92,7 @@ export class SupervisorLayoutComponent {
 
   // update page title
   private updatePageTitle(url: string): void {
+
     const path = url
       .split(/[?#]/)[0]
       .replace(/\/+$/, '');
