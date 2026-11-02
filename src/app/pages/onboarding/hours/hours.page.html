@@ -1,0 +1,65 @@
+<ion-content class="onboarding-content">
+  <main class="hours-container">
+
+    <!-- app logo -->
+    <header class="hours-header">
+      <img
+        src="assets/interntrack_logo.png"
+        class="app-logo"
+      />
+    </header>
+
+    <!-- animated content -->
+    <div class="slide-content" [class.slide-out]="isLeaving">
+
+      <!-- illustration -->
+      <section class="hours-illustration">
+        <img
+          src="assets/oc_2.png"
+          class="student-image"
+        />
+      </section>
+
+      <!-- onboarding text -->
+      <section class="hours-text">
+        <h1>Every Hour Counts</h1>
+
+        <p>
+          Record your Time In and Time Out,
+          review your daily time records,
+          and monitor your progress toward
+          completing your required OJT hours.
+        </p>
+      </section>
+
+    </div>
+
+    <!-- footer navigation -->
+    <footer class="hours-footer">
+
+      <!-- skip button -->
+      <a class="skip-button" routerLink="/login">
+        SKIP
+      </a>
+
+      <!-- pagination -->
+      <div class="pagination">
+        <span class="dot"></span>
+        <span class="dot active"></span>
+        <span class="dot"></span>
+      </div>
+
+      <!-- next button -->
+      <button
+        type="button"
+        class="next-button"
+        [disabled]="isLeaving"
+        (click)="next()"
+        aria-label="Next onboarding screen">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+
+    </footer>
+
+  </main>
+</ion-content>

@@ -1,0 +1,429 @@
+// page background
+.profile-content {
+  --background: #f5f7fc;
+  --color: #252525;
+}
+
+// main container
+.profile-container {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 40px 29px 26px;
+
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+// page header
+.profile-header {
+  width: 100%;
+  margin-bottom: 25px;
+}
+
+.profile-header h1 {
+  margin: 0;
+  padding: 0;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+
+  color: #252525;
+}
+
+// student profile card
+.student-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  min-height: 227px;
+  padding: 18px 18px 23px;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+  box-sizing: border-box;
+}
+
+// student avatar
+.student-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 86px;
+  height: 86px;
+  flex-shrink: 0;
+
+  background: #d9e2ff;
+  border-radius: 50%;
+}
+
+.student-avatar span {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1;
+
+  color: #3157d5;
+}
+
+// student name
+.student-name {
+  margin: 16px 0 0;
+  padding: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+
+  color: #252525;
+  text-align: center;
+}
+
+// student information
+.student-information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  margin-top: 4px;
+
+  text-align: center;
+}
+
+.student-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #858585;
+}
+
+.separator {
+  font-size: 14px;
+  color: #858585;
+}
+
+.student-university {
+  max-width: 260px;
+
+  margin: 1px 0 0;
+  padding: 0;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+
+  color: #858585;
+  text-align: center;
+}
+
+// ojt placement
+.placement-section {
+  width: 100%;
+  margin-top: 26px;
+}
+
+.section-title {
+  margin: 0 0 9px;
+  padding: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  color: #151515;
+}
+
+// placement card
+.placement-card {
+  width: 100%;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// placement rows
+.placement-row {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 48px;
+
+  gap: 12px;
+  padding: 0 17px;
+
+  box-sizing: border-box;
+}
+
+.placement-row:not(:last-child)::after {
+  content: '';
+
+  position: absolute;
+  bottom: 0;
+  left: 17px;
+  right: 17px;
+
+  height: 1px;
+  background: #ebebeb;
+}
+
+.placement-label {
+  flex-shrink: 0;
+
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #252525;
+}
+
+.placement-value {
+  min-width: 0;
+  max-width: 65%;
+
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #858585;
+  text-align: right;
+
+  overflow-wrap: anywhere;
+}
+
+// contacts section
+.contacts-section {
+  width: 100%;
+  margin-top: 16px;
+}
+
+// contacts card
+.contacts-card {
+  width: 100%;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+// contact rows
+.contact-row {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 48px;
+
+  gap: 13px;
+  padding: 0 17px;
+
+  box-sizing: border-box;
+}
+
+.contact-row:not(:last-child)::after {
+  content: '';
+
+  position: absolute;
+  bottom: 0;
+  left: 17px;
+  right: 17px;
+
+  height: 1px;
+  background: #ebebeb;
+}
+
+// contact avatar
+.contact-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: #d9e2ff;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  color: #3157d5;
+}
+
+// contact information
+.contact-information {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-name {
+  margin: 0;
+  padding: 0;
+
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.3;
+
+  color: #252525;
+}
+
+.contact-role {
+  margin: 2px 0 0;
+  padding: 0;
+
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.3;
+
+  color: #b0b0b0;
+}
+
+// contact email button
+.contact-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+
+  margin-left: auto;
+  padding: 0;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #ffd3b0;
+  color: #ff8f36;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.contact-email ion-icon {
+  font-size: 17px;
+  color: #ff8f36;
+
+  --ionicon-stroke-width: 40px;
+}
+
+// button interactions
+.contact-email:active {
+  background: #ffc49a;
+  transform: scale(0.94);
+}
+
+.contact-email:focus-visible {
+  outline: 2px solid #3157d5;
+  outline-offset: 3px;
+}
+
+// responsive - narrow screens
+@media (max-width: 360px) {
+  .profile-container {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+
+  .student-card {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .student-details {
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .student-university {
+    font-size: 12px;
+  }
+
+  .placement-row {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .placement-label,
+  .placement-value {
+    font-size: 10px;
+  }
+
+  .contact-row {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .contact-name {
+    font-size: 10px;
+  }
+}
+
+// responsive - short screens
+@media (max-height: 750px) {
+  .profile-container {
+    padding-top: 45px;
+  }
+
+  .profile-header {
+    margin-bottom: 20px;
+  }
+
+  .placement-section {
+    margin-top: 22px;
+  }
+
+  .contacts-section {
+    margin-top: 14px;
+  }
+}
+
+// accessibility - reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .contact-email {
+    transition: none;
+  }
+}

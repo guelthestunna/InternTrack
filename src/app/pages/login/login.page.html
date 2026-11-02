@@ -1,0 +1,138 @@
+<ion-content class="login-content">
+  <main class="login-container">
+
+    <!-- campus background -->
+    <div class="campus-background">
+      <img
+        src="assets/plv_bg.png"
+        class="background-image"
+        alt=""
+      />
+    </div>
+
+    <!-- branding -->
+    <header class="login-header">
+      <img
+        src="assets/interntrack_logo.png"
+        class="login-logo"
+        alt="InternTrack Logo"
+      />
+
+      <h1 class="brand-name">
+        Intern<span>Track</span>
+      </h1>
+
+      <p class="brand-description">
+        Weekly Report and DTR Monitoring System
+      </p>
+    </header>
+
+    <!-- login card -->
+    <section class="login-card">
+      <h2>Log In</h2>
+
+      <form (ngSubmit)="login()">
+
+        <!-- student id -->
+        <div class="form-group">
+          <label for="studentId">
+            Student ID <span>*</span>
+          </label>
+
+          <div class="input-container">
+            <ion-icon name="person-circle-outline"></ion-icon>
+
+            <input
+              id="studentId"
+              type="text"
+              name="studentId"
+              [(ngModel)]="studentId"
+              placeholder="2#-#####"
+              autocomplete="username"
+            />
+          </div>
+        </div>
+
+        <!-- password -->
+        <div class="form-group">
+          <label for="password">
+            Password <span>*</span>
+          </label>
+
+          <div class="input-container">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+
+            <input
+              id="password"
+              name="password"
+              [(ngModel)]="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="********"
+              autocomplete="current-password"
+            />
+
+            <!-- password toggle -->
+            <button
+              type="button"
+              class="password-toggle"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              (click)="togglePassword()">
+              <ion-icon
+                [name]="showPassword ? 'eye-outline' : 'eye-off-outline'">
+              </ion-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- forgot password -->
+        <div class="forgot-password">
+          <button
+            type="button"
+            (click)="forgotPassword()">
+            Forgot Password?
+          </button>
+        </div>
+
+        <!-- error message -->
+        @if (errorMessage) {
+          <p class="error-message" role="alert">
+            {{ errorMessage }}
+          </p>
+        }
+
+        <!-- login button -->
+        <button
+          type="submit"
+          class="login-button">
+          LOG IN
+        </button>
+
+      </form>
+
+      <!-- sign up -->
+      <div class="signup-container">
+        <p>
+          Don't have an account?
+          <a routerLink="/signup">Sign Up</a>
+        </p>
+      </div>
+
+      <!-- footer links -->
+      <footer class="login-footer">
+        <button
+          type="button"
+          (click)="openLegal('Privacy Policy')">
+          Privacy Policy
+        </button>
+
+        <button
+          type="button"
+          (click)="openLegal('Terms and Conditions')">
+          Terms and Conditions
+        </button>
+      </footer>
+
+    </section>
+
+  </main>
+</ion-content>

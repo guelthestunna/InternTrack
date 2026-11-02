@@ -1,0 +1,167 @@
+<ion-content class="home-content">
+  <main class="home-container">
+
+    <!-- student information -->
+    <header class="home-header">
+      <div class="greeting-row">
+        <p class="greeting">Good Morning,</p>
+        <span class="intern-badge">Active Intern</span>
+      </div>
+
+      <h1 class="student-name">{{ studentName }}</h1>
+
+      <div class="company-location">
+        <ion-icon name="business-outline"></ion-icon>
+        <span>{{ companyLocation }}</span>
+      </div>
+    </header>
+
+    <!-- today's attendance -->
+    <section class="attendance-card">
+      <div class="attendance-header">
+        <div class="attendance-info">
+          <p>Today's Attendance</p>
+          <h2>Not timed in yet</h2>
+        </div>
+
+        <span class="attendance-time">8:01 am</span>
+      </div>
+
+      <!-- time in button -->
+      <button
+        type="button"
+        class="time-in-button"
+        routerLink="/tabs/attendance">
+        <ion-icon name="camera-outline"></ion-icon>
+        <span>Time In</span>
+      </button>
+
+      <p class="attendance-note">
+        A photo will be captured as supporting evidence.
+      </p>
+    </section>
+
+    <!-- ojt hours -->
+    <section class="hours-card">
+      <div class="hours-header">
+        <h2>OJT Hours</h2>
+
+        <button
+          type="button"
+          class="view-dtr"
+          routerLink="/tabs/dtr">
+          View DTR
+        </button>
+      </div>
+
+      <!-- hours summary -->
+      <div class="hours-summary">
+        <span class="completed-hours">{{ totalHours }}</span>
+        <span class="required-hours">
+          of {{ requiredHours }} hrs required
+        </span>
+      </div>
+
+      <!-- progress bar -->
+      <div
+        class="hours-progress"
+        role="progressbar"
+        aria-label="OJT hours completed"
+        [attr.aria-valuenow]="totalHours"
+        aria-valuemin="0"
+        [attr.aria-valuemax]="requiredHours">
+
+        <div
+          class="verified-progress"
+          [style.width.%]="verifiedPercent">
+        </div>
+
+        <div
+          class="provisional-progress"
+          [style.width.%]="provisionalPercent">
+        </div>
+      </div>
+
+      <!-- progress legend -->
+      <div class="hours-legend">
+
+        <div class="legend-item">
+          <span class="legend-dot verified"></span>
+          <span>Verified: <strong>{{ verifiedHours }}h</strong></span>
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-dot provisional"></span>
+          <span>Provisional: <strong>{{ provisionalHours }}h</strong></span>
+        </div>
+
+        <div class="legend-item">
+          <span class="legend-dot remaining"></span>
+          <span>Remaining: <strong>{{ remainingHours }}h</strong></span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- to do section -->
+    <section class="todo-section">
+      <h2 class="section-title">To Do</h2>
+
+      <button
+        type="button"
+        class="todo-card"
+        routerLink="/tabs/reports">
+
+        <div class="todo-icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+
+        <div class="todo-details">
+          <h3>Week 9 Report</h3>
+          <p>Due Fri, Oct 30</p>
+        </div>
+
+        <span class="draft-badge">Draft</span>
+
+        <ion-icon
+          name="chevron-forward-outline"
+          class="todo-arrow">
+        </ion-icon>
+      </button>
+    </section>
+
+    <!-- recent activities -->
+    <section class="activities-section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Activities</h2>
+
+        <button
+          type="button"
+          class="see-all"
+          (click)="toggleActivities()">
+          {{ showAllActivities ? 'See Less' : 'See All' }}
+        </button>
+      </div>
+
+      <!-- activities list -->
+      <div class="activities-card">
+        @for (activity of displayedActivities; track activity.id) {
+          <div class="activity-item">
+
+            <div class="activity-icon">
+              <ion-icon [name]="activity.icon"></ion-icon>
+            </div>
+
+            <div class="activity-details">
+              <p>{{ activity.description }}</p>
+            </div>
+
+            <span class="activity-day">{{ activity.day }}</span>
+
+          </div>
+        }
+      </div>
+    </section>
+
+  </main>
+</ion-content>

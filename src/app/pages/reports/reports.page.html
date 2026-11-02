@@ -1,0 +1,105 @@
+<ion-content class="reports-content">
+  <main class="reports-container">
+
+    <!-- page header -->
+    <header class="reports-header">
+      <h1>Reports</h1>
+
+      <!-- create report button -->
+      <button
+        type="button"
+        class="create-report-button"
+        (click)="createReport()">
+        <ion-icon name="add-outline"></ion-icon>
+        <span>Create Report</span>
+      </button>
+    </header>
+
+    <!-- current week report -->
+    <section class="current-report-card">
+
+      <!-- report information -->
+      <div class="report-top">
+        <div class="report-info">
+          <span class="report-label">THIS WEEK</span>
+
+          <h2>
+            Week {{ currentReport.week }} · {{ currentReport.period }}
+          </h2>
+
+          <p class="edited-date">
+            {{ currentReport.editedLabel }}
+          </p>
+        </div>
+
+        <!-- draft status -->
+        <span class="draft-badge">
+          <ion-icon name="create-outline"></ion-icon>
+          Draft
+        </span>
+      </div>
+
+      <!-- continue editing -->
+      <button
+        type="button"
+        class="continue-button"
+        (click)="editCurrentReport()">
+        Continue Editing
+      </button>
+
+    </section>
+
+    <!-- previous reports -->
+    <section class="previews-section">
+      <h2 class="section-title">Previews</h2>
+
+      <!-- reports list -->
+      <div class="previews-card">
+
+        @for (report of previousReports; track report.id) {
+          <button
+            type="button"
+            class="report-row"
+            [attr.aria-label]="'View Week ' + report.week + ' report'"
+            (click)="openReport(report)">
+
+            <!-- report information -->
+            <div class="previous-report-info">
+              <h3>Week {{ report.week }}</h3>
+
+              <p>
+                {{ report.period }}
+
+                @if (report.commentCount) {
+                  <span class="comment-separator">·</span>
+                  {{ report.commentCount }}
+                  {{ report.commentCount === 1 ? 'comment' : 'comments' }}
+                }
+              </p>
+            </div>
+
+            <!-- report status -->
+            <span
+              class="report-status"
+              [class.approved]="report.status === 'approved'"
+              [class.returned]="report.status === 'returned'"
+              [class.draft]="report.status === 'draft'">
+
+              <ion-icon [name]="getStatusIcon(report.status)"></ion-icon>
+              {{ getStatusLabel(report.status) }}
+            </span>
+
+            <!-- report arrow -->
+            <ion-icon
+              name="chevron-forward-outline"
+              class="report-arrow">
+            </ion-icon>
+
+          </button>
+        }
+
+      </div>
+    </section>
+
+  </main>
+</ion-content>

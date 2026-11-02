@@ -1,0 +1,107 @@
+<div class="supervisor-shell">
+
+  <!-- sidebar backdrop -->
+  @if (isSidebarOpen) {
+    <button
+      type="button"
+      class="sidebar-backdrop"
+      aria-label="Close navigation menu"
+      (click)="closeSidebar()">
+    </button>
+  }
+
+  <!-- sidebar -->
+  <aside
+    id="supervisor-sidebar"
+    class="supervisor-sidebar"
+    [class.sidebar-open]="isSidebarOpen">
+
+    <!-- branding -->
+    <div class="sidebar-brand">
+      <img
+        src="assets/interntrack_logo.png"
+        alt="InternTrack Logo"
+        class="brand-logo"
+      />
+
+      <div class="brand-information">
+        <h1>Intern<span>Track</span></h1>
+        <p>Supervisor Portal</p>
+      </div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <!-- navigation -->
+    <nav
+      class="sidebar-navigation"
+      aria-label="Company Supervisor Navigation">
+
+      <span class="navigation-heading">WORKSPACE</span>
+
+      @for (item of navItems; track item.path) {
+        <a
+          class="sidebar-link"
+          [routerLink]="item.path"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          ariaCurrentWhenActive="page"
+          (click)="closeSidebar()">
+
+          <span class="link-text">{{ item.label }}</span>
+        </a>
+      }
+
+    </nav>
+
+    <!-- sidebar footer -->
+    <div class="sidebar-footer">
+      <div class="footer-divider"></div>
+      <p class="footer-title">InternTrack</p>
+      <p class="footer-description">Company Supervisor Workspace</p>
+    </div>
+
+  </aside>
+
+  <!-- main workspace -->
+  <div class="supervisor-workspace">
+
+    <!-- top header -->
+    <header class="workspace-header">
+
+      <div class="header-left">
+
+        <!-- mobile menu -->
+        <button
+          type="button"
+          class="menu-button"
+          aria-controls="supervisor-sidebar"
+          [attr.aria-expanded]="isSidebarOpen"
+          (click)="toggleSidebar()">
+          Menu
+        </button>
+
+        <!-- page information -->
+        <div class="header-information">
+          <h2>{{ currentPageTitle }}</h2>
+        </div>
+
+      </div>
+
+      <!-- supervisor role -->
+      <div class="header-right">
+        <span class="supervisor-badge">Company Supervisor</span>
+      </div>
+
+    </header>
+
+    <!-- page content -->
+    <main class="workspace-main">
+      <div class="workspace-content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+  </div>
+
+</div>

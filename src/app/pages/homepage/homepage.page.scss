@@ -1,0 +1,541 @@
+// page background
+.home-content {
+  --background: #f5f7fc;
+  --color: #252525;
+}
+
+// main container
+.home-container {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 44px 29px 26px;
+
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+// student information
+.home-header {
+  width: 100%;
+  margin-bottom: 19px;
+}
+
+.greeting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.greeting {
+  margin: 0;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  color: #505050;
+}
+
+.intern-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 11px;
+
+  border-radius: 100px;
+
+  background: #ff9638;
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.student-name {
+  margin: 3px 0 8px;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+
+  color: #222222;
+}
+
+.company-location {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #969696;
+
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.company-location ion-icon {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+// attendance card
+.attendance-card {
+  width: 100%;
+  padding: 14px 15px 11px;
+
+  background: #3157d5;
+  color: #ffffff;
+
+  border-radius: 14px;
+
+  box-shadow: 0 4px 9px rgba(49, 87, 213, 0.15);
+  box-sizing: border-box;
+}
+
+.attendance-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.attendance-info p {
+  margin: 0 0 4px;
+
+  font-size: 10px;
+  font-weight: 400;
+
+  color: #d8e1ff;
+}
+
+.attendance-info h2 {
+  margin: 0;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #ffffff;
+}
+
+.attendance-time {
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+// time in button
+.time-in-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 44px;
+
+  gap: 8px;
+
+  background: #ffffff;
+  color: #3157d5;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.time-in-button ion-icon {
+  font-size: 16px;
+}
+
+.time-in-button:active {
+  transform: scale(0.98);
+  background: #f0f3ff;
+}
+
+.attendance-note {
+  margin: 11px 0 0;
+
+  font-size: 8px;
+  font-weight: 400;
+  text-align: center;
+
+  color: #e7ecff;
+}
+
+// ojt hours card
+.hours-card {
+  width: 100%;
+
+  margin-top: 22px;
+  padding: 15px 15px 16px;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.hours-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hours-header h2 {
+  margin: 0;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  color: #252525;
+}
+
+.view-dtr {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  color: #3157d5;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+
+  cursor: pointer;
+}
+
+// hours summary
+.hours-summary {
+  display: flex;
+  align-items: baseline;
+
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.completed-hours {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.7px;
+
+  color: #202020;
+}
+
+.required-hours {
+  font-size: 13px;
+  font-weight: 400;
+
+  color: #858585;
+}
+
+// progress bar
+.hours-progress {
+  display: flex;
+  overflow: hidden;
+
+  width: 100%;
+  height: 7px;
+
+  margin-top: 13px;
+
+  background: #e6e7eb;
+  border-radius: 100px;
+}
+
+.verified-progress {
+  height: 100%;
+  background: #3157d5;
+}
+
+.provisional-progress {
+  height: 100%;
+  background: #a568ff;
+}
+
+// progress legend
+.hours-legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 5px;
+  margin-top: 17px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+  gap: 4px;
+
+  font-size: 9px;
+  color: #777777;
+
+  white-space: nowrap;
+}
+
+.legend-item strong {
+  font-weight: 500;
+  color: #252525;
+}
+
+.legend-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.legend-dot.verified {
+  background: #3157d5;
+}
+
+.legend-dot.provisional {
+  background: #a568ff;
+}
+
+.legend-dot.remaining {
+  background: #d8d8d8;
+}
+
+// to do section
+.todo-section {
+  margin-top: 23px;
+}
+
+.section-title {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #151515;
+}
+
+// to do card
+.todo-card {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 55px;
+
+  margin-top: 9px;
+  padding: 11px 14px;
+
+  gap: 13px;
+
+  border: none;
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+}
+
+.todo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #3157d5;
+  color: #ffffff;
+}
+
+.todo-icon ion-icon {
+  font-size: 20px;
+}
+
+.todo-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-details h3 {
+  margin: 0 0 4px;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  color: #252525;
+}
+
+.todo-details p {
+  margin: 0;
+
+  font-size: 8px;
+  color: #999999;
+}
+
+.draft-badge {
+  padding: 5px 12px;
+
+  border-radius: 100px;
+
+  background: #eeeeee;
+  color: #b1b1b1;
+
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.todo-arrow {
+  font-size: 17px;
+  color: #929292;
+
+  flex-shrink: 0;
+}
+
+// recent activities
+.activities-section {
+  margin-top: 22px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+.see-all {
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #3157d5;
+  cursor: pointer;
+}
+
+// activities card
+.activities-card {
+  width: 100%;
+  padding: 0 15px;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  box-sizing: border-box;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+
+  min-height: 55px;
+  gap: 13px;
+
+  border-bottom: 1px solid #ededed;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #e8e8e8;
+  color: #aaaaaa;
+}
+
+.activity-icon ion-icon {
+  font-size: 20px;
+}
+
+.activity-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-details p {
+  margin: 0;
+
+  font-size: 10px;
+  font-weight: 400;
+
+  color: #252525;
+}
+
+.activity-day {
+  font-size: 11px;
+  font-weight: 400;
+
+  color: #aaaaaa;
+}
+
+// responsive - small screens
+@media (max-width: 360px) {
+  .home-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .student-name {
+    font-size: 22px;
+  }
+
+  .legend-item {
+    font-size: 8px;
+  }
+
+  .required-hours {
+    font-size: 11px;
+  }
+}
+
+// responsive - very small screens
+@media (max-width: 340px) {
+  .hours-legend {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .draft-badge {
+    padding: 5px 8px;
+  }
+}

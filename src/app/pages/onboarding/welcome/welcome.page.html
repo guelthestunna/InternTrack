@@ -1,0 +1,66 @@
+<ion-content class="onboarding-content">
+    <main class="welcome-container">
+
+        <!-- app logo -->
+        <header class="welcome-header">
+        <img
+            src="assets/interntrack_logo.png"
+            class="app-logo"
+            alt="InternTrack Logo"
+        />
+        </header>
+
+        <!-- animated content -->
+        <div class="slide-content" [class.slide-out]="isLeaving">
+
+            <!-- illustration -->
+            <section class="welcome-illustration">
+                <img
+                src="assets/oc_1.png"
+                class="student-image"
+                alt="Welcome Illustration"
+                />
+            </section>
+
+            <!-- onboarding text -->
+            <section class="welcome-text">
+                <h1>Good Morning, PLVian!</h1>
+
+                <p>
+                Your OJT journey, organized in one place.
+                Keep track of your attendance, requirements,
+                and weekly accomplishments with ease.
+                </p>
+            </section>
+
+        </div>
+
+        <!-- footer navigation -->
+        <footer class="welcome-footer">
+
+            <!-- skip button -->
+            <a class="skip-button" routerLink="/login">
+                SKIP
+            </a>
+
+            <!-- pagination -->
+            <div class="pagination">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <!-- next button -->
+            <button
+                type="button"
+                class="next-button"
+                [disabled]="isLeaving"
+                (click)="next()"
+                aria-label="Next onboarding screen">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+
+        </footer>
+
+    </main>
+</ion-content>

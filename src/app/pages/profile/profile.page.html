@@ -1,0 +1,101 @@
+<ion-content class="profile-content">
+  <main class="profile-container">
+
+    <!-- page header -->
+    <header class="profile-header">
+      <h1>Profile</h1>
+    </header>
+
+    <!-- student profile -->
+    <section class="student-card">
+
+      <!-- student avatar -->
+      <div class="student-avatar">
+        <span>{{ student.initials }}</span>
+      </div>
+
+      <!-- student name -->
+      <h2 class="student-name">{{ student.name }}</h2>
+
+      <!-- student information -->
+      <div class="student-information">
+        <p class="student-details">
+          <span>{{ student.studentId }}</span>
+          <span class="separator">·</span>
+          <span>{{ student.program }}</span>
+        </p>
+
+        <p class="student-university">
+          {{ student.university }}
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ojt placement -->
+    <section
+      class="placement-section"
+      aria-labelledby="placement-title">
+
+      <h2 id="placement-title" class="section-title">
+        OJT Placement
+      </h2>
+
+      <!-- placement details -->
+      <div class="placement-card">
+
+        @for (detail of placementDetails; track detail.label) {
+          <div class="placement-row">
+            <span class="placement-label">{{ detail.label }}</span>
+            <span class="placement-value">{{ detail.value }}</span>
+          </div>
+        }
+
+      </div>
+
+    </section>
+
+    <!-- contacts -->
+    <section
+      class="contacts-section"
+      aria-labelledby="contacts-title">
+
+      <h2 id="contacts-title" class="section-title">
+        Contacts
+      </h2>
+
+      <!-- contacts list -->
+      <div class="contacts-card">
+
+        @for (contact of contacts; track contact.id) {
+          <div class="contact-row">
+
+            <!-- contact avatar -->
+            <div class="contact-avatar">
+              {{ contact.initials }}
+            </div>
+
+            <!-- contact information -->
+            <div class="contact-information">
+              <h3 class="contact-name">{{ contact.name }}</h3>
+              <p class="contact-role">{{ contact.role }}</p>
+            </div>
+
+            <!-- email button -->
+            <button
+              type="button"
+              class="contact-email"
+              [attr.aria-label]="'Email ' + contact.name"
+              (click)="emailContact(contact)">
+              <ion-icon name="mail-outline"></ion-icon>
+            </button>
+
+          </div>
+        }
+
+      </div>
+
+    </section>
+
+  </main>
+</ion-content>

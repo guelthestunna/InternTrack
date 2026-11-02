@@ -1,0 +1,158 @@
+// ====================================
+// BOTTOM NAVIGATION BAR
+// ====================================
+
+.custom-tab-bar {
+    --background: #3157d5;
+    --border: none;
+
+    height: 61px;
+    border-radius: 100px;
+
+    margin: 0 14px 14px;
+    padding: 6px 12px 6px 12px;
+
+    display: flex;
+    align-items: center;
+
+    box-shadow: 0 4px 15px rgba(49, 87, 213, 0.15);
+}
+
+
+// ====================================
+// DEFAULT TAB BUTTON
+// ====================================
+
+ion-tab-button {
+    --background: transparent;
+    --color: #b7c4f0;
+
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+
+    border-radius: 100px;
+    overflow: hidden;
+
+    transition: flex 0.2s ease;
+}
+
+
+// ====================================
+// ICON AND TEXT ALIGNMENT
+// ====================================
+
+ion-tab-button::part(native) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 0;
+    padding: 0 6px;
+}
+
+
+// ====================================
+// DEFAULT ICON STYLE
+// ====================================
+
+ion-tab-button ion-icon {
+    font-size: 26px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+
+// ====================================
+// INACTIVE ICON (OUTLINE)
+// ====================================
+
+ion-tab-button .icon-outline {
+    display: block;
+    color: #b7c4f0;
+
+    --ionicon-stroke-width: 40px;
+}
+
+
+// ====================================
+// HIDE FILLED ICON BY DEFAULT
+// ====================================
+
+ion-tab-button .icon-filled {
+    display: none;
+}
+
+
+// ====================================
+// DEFAULT LABEL
+// ====================================
+
+ion-tab-button ion-label {
+    display: none;
+
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+
+// ====================================
+// ACTIVE TAB BACKGROUND
+// ====================================
+
+ion-tab-button.tab-selected {
+    --background: #ffffff;
+    --color: #3157d5;
+    --color-selected: #3157d5;
+
+    flex: 2.2;
+}
+
+
+// ====================================
+// HIDE OUTLINE ICON WHEN ACTIVE
+// ====================================
+
+ion-tab-button.tab-selected .icon-outline {
+    display: none;
+}
+
+
+// ====================================
+// SHOW FILLED BLUE ICON WHEN ACTIVE
+// ====================================
+
+ion-tab-button.tab-selected .icon-filled {
+    display: block;
+
+    font-size: 24px;
+    color: #3157d5 !important;
+}
+
+
+// ====================================
+// ACTIVE LABEL
+// ====================================
+
+ion-tab-button.tab-selected ion-label {
+    display: block;
+
+    color: #3157d5;
+
+    margin-left: 14px;
+    padding: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+
+    transform: translateY(1px);
+}

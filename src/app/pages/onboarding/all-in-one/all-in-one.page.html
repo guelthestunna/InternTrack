@@ -1,0 +1,61 @@
+<ion-content class="onboarding-content">
+    <main class="all-in-one-container">
+
+        <!-- app logo -->
+        <header class="all-in-one-header">
+            <img
+                src="assets/interntrack_logo.png"
+                class="app-logo"/>
+        </header>
+        
+        <!-- animated content -->
+        <div class="slide-content" [class.slide-out]="isLeaving">
+
+            <!-- illustration -->
+            <section class="welcome-illustration">
+                <img
+                src="assets/oc_3.png"
+                class="student-image"/>
+            </section>
+
+            <!-- onboarding text -->
+            <section class="all-in-one-text">
+                <h1>Your OJT, All in One Place</h1>
+
+                <p>
+                Manage your requirements, prepare weekly
+                accomplishment reports, and keep track of
+                submissions and feedback in one convenient app.
+                </p>
+            </section>
+
+        </div>
+        
+        <!-- footer navigation -->
+        <footer class="all-in-one-footer">
+            
+            <!-- skip button -->
+            <a class="skip-button" routerLink="/login">
+                SKIP
+            </a>
+
+            <!-- pagination -->
+            <div class="pagination">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot active"></span>
+            </div>
+            
+            <!-- next button -->
+            <button
+                type="button"
+                class="next-button"
+                [disabled]="isLeaving"
+                (click)="next()">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+
+        </footer>
+
+    </main>
+</ion-content>

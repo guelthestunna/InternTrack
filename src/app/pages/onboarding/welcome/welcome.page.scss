@@ -1,0 +1,261 @@
+// page background
+.onboarding-content {
+  --background: #e8edff;
+}
+
+// main container
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: 430px;
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 16px 30px 30px;
+
+  box-sizing: border-box;
+  font-family: 'Surgena', sans-serif;
+}
+
+// app logo
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.app-logo {
+  display: block;
+
+  width: 50px;
+  height: 42px;
+
+  object-fit: contain;
+}
+
+// animated content
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  animation: slideContentIn 350ms ease-out both;
+}
+
+.slide-content.slide-out {
+  animation: slideContentOut 300ms ease-in both;
+}
+
+// student illustration
+.welcome-illustration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-top: 70px;
+
+  flex-shrink: 0;
+}
+
+.student-image {
+  display: block;
+
+  width: 100%;
+  max-width: 325px;
+  height: 350px;
+
+  object-fit: contain;
+}
+
+// onboarding text
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: 340px;
+
+  margin-top: 25px;
+
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.welcome-text h1 {
+  margin: 0;
+  padding: 0;
+
+  color: #3157d5;
+
+  font-family: 'Surgena', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+
+  line-height: 1.2;
+  letter-spacing: -1.3px;
+
+  white-space: nowrap;
+}
+
+.welcome-text p {
+  width: 100%;
+  max-width: 325px;
+
+  margin: 10px 0 0;
+  padding: 0;
+
+  color: #1e1e1e;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+
+  line-height: 1.4;
+  letter-spacing: -0.15px;
+
+  text-align: center;
+}
+
+// footer navigation
+.welcome-footer {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: auto;
+  padding-top: 35px;
+
+  flex-shrink: 0;
+}
+
+// skip button
+.skip-button {
+  justify-self: start;
+
+  color: #727272;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.skip-button:active {
+  color: #3157d5;
+}
+
+// pagination
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+
+  border-radius: 50%;
+  background-color: #aaa9a9;
+
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  width: 35px;
+  height: 9px;
+
+  background-color: #ff9638;
+  border-radius: 100px;
+}
+
+// next button
+.next-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  justify-self: end;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background-color: #3157d5;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.next-button ion-icon {
+  font-size: 20px;
+  color: #ffffff;
+
+  --ionicon-stroke-width: 36px;
+}
+
+.next-button:active {
+  background-color: #2448b8;
+  transform: scale(0.95);
+}
+
+// slide in animation
+@keyframes slideContentIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// slide out animation
+@keyframes slideContentOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+// accessibility - reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .slide-content,
+  .slide-content.slide-out {
+    animation: none;
+  }
+}

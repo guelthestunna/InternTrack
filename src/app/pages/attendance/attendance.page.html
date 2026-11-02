@@ -1,0 +1,137 @@
+<ion-content class="attendance-content">
+  <main class="attendance-container">
+
+    <!-- page header -->
+    <header class="attendance-header">
+      <h1>Attendance</h1>
+    </header>
+
+    <!-- offline notification -->
+    @if (offlinePreview) {
+      <section class="offline-banner">
+
+        <div class="offline-icon">
+          <ion-icon name="cloud-offline-outline"></ion-icon>
+        </div>
+
+        <div class="offline-details">
+          <h3>You're Offline</h3>
+          <p>Offline preview · Sync not connected</p>
+        </div>
+
+        <button
+          type="button"
+          class="retry-button"
+          (click)="retrySync()">
+          Retry
+        </button>
+
+      </section>
+
+      @if (syncMessage) {
+        <p class="sync-message" role="status">
+          {{ syncMessage }}
+        </p>
+      }
+    }
+
+    <!-- attendance card -->
+    <section class="attendance-card">
+
+      <!-- current date -->
+      <p class="current-date">{{ currentDate }}</p>
+
+      <!-- live clock -->
+      <div class="clock-container">
+        <h2 class="clock-time">{{ currentTime }}</h2>
+        <span class="clock-period">{{ timePeriod }}</span>
+      </div>
+
+      <!-- attendance status -->
+      <div class="attendance-status">
+        <span
+          class="status-badge"
+          [class.timed-in]="timeIn && !timeOut"
+          [class.timed-out]="timeOut">
+          {{ attendanceStatus }}
+        </span>
+      </div>
+
+      <!-- attendance actions -->
+      <div class="attendance-actions">
+
+        <button
+          type="button"
+          class="time-in-button"
+          [disabled]="!!timeIn"
+          (click)="recordTimeIn()">
+          <ion-icon name="log-in-outline"></ion-icon>
+          <span>Time In</span>
+        </button>
+
+        <button
+          type="button"
+          class="time-out-button"
+          [disabled]="!timeIn || !!timeOut"
+          (click)="recordTimeOut()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          <span>Time Out</span>
+        </button>
+
+      </div>
+
+    </section>
+
+    <!-- recent logs -->
+    <section class="recent-logs-section">
+
+      <!-- section header -->
+      <div class="logs-header">
+        <h2>Recent Logs</h2>
+        <a class="full-dtr" routerLink="/tabs/dtr">
+          Full DTR
+        </a>
+      </div>
+
+      <!-- logs list -->
+      <div class="logs-card">
+
+        @for (log of recentLogs; track log.id) {
+          <div class="log-item">
+
+            <!-- log details -->
+            <div class="log-details">
+              <h3>{{ log.date }}</h3>
+              <p>{{ log.hours }}</p>
+            </div>
+
+            <!-- log status -->
+            <span
+              class="log-status"
+              [class.pending]="log.status === 'pending'"
+              [class.synced]="log.status === 'synced'">
+
+              @if (log.status === 'pending') {
+                <ion-icon name="cloud-offline-outline"></ion-icon>
+                Pending Upload
+              } @else {
+                <ion-icon name="checkmark-outline"></ion-icon>
+                Synced
+              }
+
+            </span>
+
+          </div>
+        }
+
+      </div>
+
+      <!-- sync information -->
+      <p class="last-synced">
+        Demo attendance records · Server sync not connected
+      </p>
+
+    </section>
+
+  </main>
+</ion-content>

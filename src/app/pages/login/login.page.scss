@@ -1,0 +1,520 @@
+// page background
+.login-content {
+  --background: #3157d5;
+  --color: #252525;
+}
+
+// main container
+.login-container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 480px;
+  min-height: 100%;
+  min-height: 100dvh;
+
+  margin: 0 auto;
+  padding: 0 28px 36px;
+
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+
+  isolation: isolate;
+}
+
+// campus background
+.campus-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.campus-background img,
+.background-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+// blue background overlay
+.campus-background::after {
+  content: '';
+
+  position: absolute;
+  top: -460px;
+  left: 50%;
+
+  width: 175%;
+  height: 900px;
+
+  transform: translateX(-50%);
+
+  background: rgba(49, 87, 213, 0.812);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+// login header
+.login-header {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  height: 344px;
+  flex-shrink: 0;
+
+  padding-bottom: 43px;
+  box-sizing: border-box;
+}
+
+// branding
+.login-logo,
+.login-header > img {
+  display: block;
+
+  width: 110px;
+  height: 100px;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+}
+
+.brand-name {
+  margin: 4px 0 0;
+  padding: 0;
+
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -1.2px;
+
+  color: #ffffff;
+  text-align: center;
+}
+
+.brand-name span {
+  color: #ff9638;
+}
+
+.brand-description {
+  margin: 4px 0 0;
+  padding: 0;
+
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #ffffff;
+  text-align: center;
+}
+
+// login card
+.login-card {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 471px;
+
+  padding: 30px 33px 18px;
+
+  background: #ffffff;
+  border-radius: 24px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.login-card h2 {
+  margin: 0 0 34px;
+  padding: 0;
+
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+
+  color: #111111;
+}
+
+// login form
+.login-card form {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// form groups
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #909097;
+}
+
+.form-group label span {
+  color: #e04b4b;
+}
+
+// input fields
+.input-container {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  height: 52px;
+
+  gap: 13px;
+  padding: 0 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #92939a;
+  border-radius: 11px;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.input-container:focus-within {
+  border-color: #3157d5;
+  box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.10);
+}
+
+.input-container ion-icon {
+  font-size: 20px;
+  color: #999ba2;
+
+  flex-shrink: 0;
+  --ionicon-stroke-width: 32px;
+}
+
+.input-container input {
+  flex: 1;
+
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #252525;
+  box-sizing: border-box;
+}
+
+.input-container input::placeholder {
+  color: #a4a6ad;
+  opacity: 1;
+}
+
+// password toggle
+.password-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 24px;
+  height: 24px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.password-toggle ion-icon {
+  font-size: 20px;
+  color: #999ba2;
+
+  transition: color 0.2s ease;
+}
+
+.password-toggle:active ion-icon {
+  color: #3157d5;
+}
+
+// forgot password
+.forgot-password {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+
+  margin-top: -5px;
+  margin-bottom: 28px;
+}
+
+.forgot-password button {
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  color: #3157d5;
+  cursor: pointer;
+}
+
+.forgot-password button:active {
+  color: #2448b8;
+}
+
+// error message
+.error-message {
+  margin: -12px 0 12px;
+  padding: 0;
+
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #dc3545;
+}
+
+// login button
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 45px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #3157d5;
+  color: #ffffff;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.login-button:active {
+  background: #2448b8;
+  transform: scale(0.98);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+// sign up
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-top: 37px;
+
+  text-align: center;
+}
+
+.signup-container p {
+  margin: 0;
+  padding: 0;
+
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: #555555;
+}
+
+.signup-container a {
+  margin: 0;
+  padding: 0;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  color: #ff8732;
+
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.signup-container a:active {
+  color: #e66e1c;
+}
+
+// footer links
+.login-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.login-footer button {
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  color: #999999;
+
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  cursor: pointer;
+}
+
+.login-footer button:active {
+  color: #3157d5;
+}
+
+// responsive - short screens
+@media (max-height: 760px) {
+  .login-container {
+    padding-bottom: 20px;
+  }
+
+  .login-header {
+    height: 260px;
+    padding-bottom: 25px;
+  }
+
+  .login-logo,
+  .login-header > img {
+    width: 90px;
+    height: 80px;
+  }
+
+  .brand-name {
+    font-size: 26px;
+  }
+
+  .brand-description {
+    font-size: 11px;
+  }
+
+  .login-card {
+    min-height: 450px;
+    padding-top: 24px;
+  }
+
+  .login-card h2 {
+    margin-bottom: 25px;
+  }
+
+  .signup-container {
+    margin-top: 25px;
+  }
+
+  .login-footer {
+    padding-top: 22px;
+  }
+}
+
+// responsive - narrow screens
+@media (max-width: 360px) {
+  .login-container {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .login-card {
+    padding-left: 23px;
+    padding-right: 23px;
+  }
+
+  .brand-name {
+    font-size: 26px;
+  }
+
+  .brand-description {
+    font-size: 11px;
+  }
+
+  .login-card h2 {
+    font-size: 20px;
+  }
+
+  .input-container {
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .login-footer button {
+    font-size: 8px;
+  }
+}

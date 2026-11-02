@@ -35,3 +35,13 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+@font-face {
+    font-family: 'Surgena';
+    src: url('/assets/SurgenaPersonalUseOnlySembd-q2qwd.ttf')
+        format('truetype');
+
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

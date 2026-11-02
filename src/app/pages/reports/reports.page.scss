@@ -1,0 +1,427 @@
+// page background
+.reports-content {
+  --background: #f5f7fc;
+  --color: #252525;
+}
+
+// main container
+.reports-container {
+  width: 100%;
+  max-width: 440px;
+  min-height: 100%;
+
+  margin: 0 auto;
+  padding: 40px 29px 30px;
+
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+// page header
+.reports-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.reports-header h1 {
+  margin: 0;
+  padding: 0;
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.7px;
+
+  color: #252525;
+}
+
+// create report button
+.create-report-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 117px;
+  height: 25px;
+
+  gap: 5px;
+  padding: 0 12px;
+
+  border: none;
+  border-radius: 100px;
+
+  background: #3157d5;
+  color: #ffffff;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.create-report-button ion-icon {
+  font-size: 13px;
+  color: #ffffff;
+
+  --ionicon-stroke-width: 40px;
+}
+
+.create-report-button:active {
+  background: #2448b8;
+  transform: scale(0.97);
+}
+
+// current report card
+.current-report-card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 140px;
+
+  padding: 16px 19px 14px;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+  box-sizing: border-box;
+}
+
+// report information
+.report-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 100%;
+  gap: 8px;
+}
+
+.report-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.report-label {
+  display: block;
+  margin-bottom: 7px;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  color: #9a9a9a;
+}
+
+.report-info h2 {
+  margin: 0;
+  padding: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+
+  color: #252525;
+}
+
+.edited-date {
+  margin: 7px 0 0;
+  padding: 0;
+
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.3;
+
+  color: #aaaaaa;
+}
+
+// draft badge
+.draft-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 59px;
+  height: 22px;
+
+  gap: 4px;
+  padding: 0 9px;
+
+  background: #ededed;
+  color: #a8a8a8;
+
+  border-radius: 100px;
+  box-sizing: border-box;
+
+  font-size: 9px;
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.draft-badge ion-icon {
+  font-size: 11px;
+  color: #b1b1b1;
+}
+
+// continue editing button
+.continue-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 36px;
+
+  margin-top: auto;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #d6dfff;
+  color: #3157d5;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.continue-button:active {
+  background: #becdff;
+  transform: scale(0.98);
+}
+
+// previous reports section
+.previews-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  padding: 0;
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  color: #151515;
+}
+
+// reports list
+.previews-card {
+  width: 100%;
+  padding: 0 17px;
+
+  background: #ffffff;
+  border-radius: 13px;
+
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.035);
+
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+// report rows
+.report-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 55px;
+
+  gap: 10px;
+  padding: 9px 0;
+
+  background: transparent;
+
+  border: none;
+  border-bottom: 1px solid #ebebeb;
+
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+
+  box-sizing: border-box;
+  cursor: pointer;
+
+  transition: background-color 0.2s ease;
+}
+
+.report-row:last-child {
+  border-bottom: none;
+}
+
+.report-row:active {
+  background: #f7f8fc;
+}
+
+// previous report information
+.previous-report-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.previous-report-info h3 {
+  margin: 0 0 4px;
+  padding: 0;
+
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+
+  color: #252525;
+}
+
+.previous-report-info p {
+  margin: 0;
+  padding: 0;
+
+  font-size: 8px;
+  font-weight: 400;
+  line-height: 1.3;
+
+  color: #999999;
+}
+
+.comment-separator {
+  margin: 0 2px;
+  color: #a5a5a5;
+}
+
+// report status
+.report-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 63px;
+  height: 19px;
+  flex-shrink: 0;
+
+  gap: 4px;
+  padding: 0 8px;
+
+  border-radius: 100px;
+  box-sizing: border-box;
+
+  font-size: 8px;
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.report-status ion-icon {
+  font-size: 10px;
+  flex-shrink: 0;
+
+  --ionicon-stroke-width: 40px;
+}
+
+// report status states
+.report-status.approved {
+  background: #c8e2ff;
+  color: #6c8eaf;
+}
+
+.report-status.returned {
+  background: #ff9638;
+  color: #a96229;
+}
+
+.report-status.draft {
+  background: #ededed;
+  color: #a8a8a8;
+}
+
+// report arrow
+.report-arrow {
+  font-size: 18px;
+  color: #999999;
+  flex-shrink: 0;
+
+  --ionicon-stroke-width: 36px;
+}
+
+// keyboard accessibility
+.create-report-button:focus-visible,
+.continue-button:focus-visible,
+.report-row:focus-visible {
+  outline: 2px solid #3157d5;
+  outline-offset: 3px;
+}
+
+// responsive - narrow screens
+@media (max-width: 360px) {
+  .reports-container {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+
+  .reports-header h1 {
+    font-size: 22px;
+  }
+
+  .create-report-button {
+    min-width: 108px;
+    font-size: 9px;
+  }
+
+  .current-report-card {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .report-info h2 {
+    font-size: 14px;
+  }
+
+  .previews-card {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .report-row {
+    gap: 7px;
+  }
+
+  .report-status {
+    min-width: 57px;
+    padding: 0 6px;
+    font-size: 7px;
+  }
+}
+
+// responsive - short screens
+@media (max-height: 750px) {
+  .reports-container {
+    padding-top: 45px;
+  }
+
+  .reports-header {
+    margin-bottom: 20px;
+  }
+
+  .previews-section {
+    margin-top: 17px;
+  }
+}

@@ -1,0 +1,216 @@
+<ion-content class="dtr-content">
+  <main class="dtr-container">
+
+    <!-- page header -->
+    <header class="dtr-header">
+      <h1>My Daily Time Record</h1>
+    </header>
+
+    <!-- calendar switch -->
+    <section class="calendar-switch">
+      <button
+        type="button"
+        class="switch-button"
+        [class.active]="calendarMode === 'weekly'"
+        [attr.aria-pressed]="calendarMode === 'weekly'"
+        (click)="setCalendarMode('weekly')">
+        Weekly Calendar
+      </button>
+
+      <button
+        type="button"
+        class="switch-button"
+        [class.active]="calendarMode === 'monthly'"
+        [attr.aria-pressed]="calendarMode === 'monthly'"
+        (click)="setCalendarMode('monthly')">
+        Monthly Calendar
+      </button>
+    </section>
+
+    <!-- calendar card -->
+    <section class="calendar-card">
+      <div class="calendar-title">
+        <h2>{{ monthLabel }}</h2>
+      </div>
+
+      <!-- weekly calendar -->
+      @if (calendarMode === 'weekly') {
+        <div class="weekly-calendar">
+          <button
+            type="button"
+            class="week-arrow"
+            aria-label="Previous week"
+            (click)="changePeriod(-1)">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </button>
+
+          @for (day of weeklyDays; track day.key) {
+            <button
+              type="button"
+              class="calendar-day"
+              [class.selected]="isSelected(day.key)"
+              [attr.aria-label]="day.fullLabel"
+              [attr.aria-pressed]="isSelected(day.key)"
+              (click)="selectDate(day.date)">
+              <span class="day-number">{{ day.number }}</span>
+              <span class="day-label">{{ day.label }}</span>
+
+              @if (getMarker(day.key); as marker) {
+                <span
+                  class="day-dot"
+                  [class.provisional]="marker === 'provisional'">
+                </span>
+              }
+            </button>
+          }
+
+          <button
+            type="button"
+            class="week-arrow"
+            aria-label="Next week"
+            (click)="changePeriod(1)">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+      }
+
+      <!-- monthly calendar -->
+      @if (calendarMode === 'monthly') {
+        <div class="monthly-calendar">
+          <div class="month-navigation">
+            <button
+              type="button"
+              aria-label="Previous month"
+              (click)="changePeriod(-1)">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </button>
+
+            <span>{{ monthLabel }}</span>
+
+            <button
+              type="button"
+              aria-label="Next month"
+              (click)="changePeriod(1)">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+          </div>
+
+          <div class="month-weekdays">
+            @for (day of weekdays; track day) {
+              <span>{{ day }}</span>
+            }
+          </div>
+
+          <div class="month-grid">
+            @for (day of monthlyDays; track $index) {
+              @if (day) {
+                <button
+                  type="button"
+                  class="month-day"
+                  [class.selected]="isSelected(day.key)"
+                  [attr.aria-label]="day.fullLabel"
+                  (click)="selectDate(day.date)">
+                  <span>{{ day.number }}</span>
+
+                  @if (getMarker(day.key); as marker) {
+                    <span
+                      class="month-dot"
+                      [class.provisional]="marker === 'provisional'">
+                    </span>
+                  }
+                </button>
+              } @else {
+                <span class="empty-day"></span>
+              }
+            }
+          </div>
+        </div>
+      }
+    </section>
+
+    <!-- daily time record -->
+    <section class="daily-record-card">
+      <div class="record-header">
+        <h2>{{ selectedDateLabel }}</h2>
+        <span class="record-badge" [class.recorded]="selectedRecord">
+          {{ selectedRecord ? 'RECORDED' : 'NO LOG' }}
+        </span>
+      </div>
+
+      <!-- recorded shift or empty state -->
+      @if (selectedRecord; as record) {
+        <div class="record-information">
+          <div class="record-time">
+            <span>Time In</span>
+            <strong>{{ record.timeIn }}</strong>
+          </div>
+
+          <div class="time-divider"></div>
+
+          <div class="record-time">
+            <span>Time Out</span>
+            <strong>{{ record.timeOut || '--:--' }}</strong>
+          </div>
+        </div>
+
+        <p class="record-caption">
+          {{ record.status === 'verified' ? 'Verified attendance record' : 'Waiting for approval' }}
+        </p>
+      } @else {
+        <div class="empty-record">
+          <ion-icon name="cafe-outline" class="empty-icon"></ion-icon>
+          <h3>No Shift Activity</h3>
+          <p>No time-in or time-out entries have been recorded for the selected date.</p>
+        </div>
+      }
+    </section>
+
+    <!-- hours summary -->
+    <section class="hours-summary">
+      <div class="hours-card">
+        <div class="hours-card-header">
+          <span>Total Verified</span>
+          <ion-icon name="checkmark-circle-outline" class="verified-icon"></ion-icon>
+        </div>
+
+        <div class="hours-value">
+          <strong>{{ verifiedHours.toFixed(1) }}</strong>
+          <span>hrs</span>
+        </div>
+
+        <p>Approved by Supervisor</p>
+      </div>
+
+      <div class="hours-card">
+        <div class="hours-card-header">
+          <span>Provisional</span>
+          <ion-icon name="time-outline" class="provisional-icon"></ion-icon>
+        </div>
+
+        <div class="hours-value">
+          <strong>{{ provisionalHours.toFixed(1) }}</strong>
+          <span>hrs</span>
+        </div>
+
+        <p>Waiting for Approval</p>
+      </div>
+    </section>
+
+    <!-- total hours -->
+    <section class="total-hours">
+      <span>Total Hours Completed:</span>
+      <strong>{{ totalHours.toFixed(1) }} / {{ requiredHours }} hrs</strong>
+    </section>
+
+    <!-- dtr actions -->
+    <button type="button" class="export-button" (click)="exportDtr()">
+      <ion-icon name="download-outline"></ion-icon>
+      <span>Export DTR</span>
+    </button>
+
+    <button type="button" class="preview-button" (click)="previewDtr()">
+      Preview DTR
+    </button>
+
+  </main>
+</ion-content>
