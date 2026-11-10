@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -46,6 +47,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./tabs/tabs.page')
         .then(m => m.TabsPage),
+    canActivate: [authGuard],
 
     children: [
 
@@ -106,6 +108,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./supervisor-layout/supervisor-layout.page')
         .then(m => m.SupervisorLayoutComponent),
+    canActivate: [authGuard],
 
     children: [
 
@@ -149,6 +152,16 @@ export const routes: Routes = [
       }
 
     ]
+  },
+
+
+  // ojt coordinator routes
+  {
+    path: 'coordinator',
+    loadComponent: () =>
+      import('./pages/coordinator/coordinator.page')
+        .then(m => m.CoordinatorPage),
+    canActivate: [authGuard]
   }
 
 ];

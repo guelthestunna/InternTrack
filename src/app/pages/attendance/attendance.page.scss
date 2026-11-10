@@ -34,6 +34,86 @@
   color: #222222;
 }
 
+// pending sync banner
+.pending-sync-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 12px 17px;
+
+  background: #d9e2ff;
+  border-radius: 13px;
+
+  margin-bottom: 15px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #3157d5;
+}
+
+.sync-now-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #3157d5;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sync-now-button:hover {
+  background: #2446b8;
+}
+
+.sync-now-button:active {
+  transform: scale(0.98);
+}
+
+// failed sync banner
+.failed-sync-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 12px 17px;
+
+  background: #ffe5e5;
+  border-radius: 13px;
+
+  margin-bottom: 15px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color: #d63031;
+}
+
+.retry-failed-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #d63031;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry-failed-button:hover {
+  background: #b01f20;
+}
+
+.retry-failed-button:active {
+  transform: scale(0.98);
+}
+
 // offline notification
 .offline-banner {
   display: flex;

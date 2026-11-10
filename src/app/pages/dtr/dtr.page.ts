@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
-import { IonContent, IonIcon, AlertController } from '@ionic/angular';
+import { Component, ChangeDetectorRef, inject, type OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController, IonContent, IonIcon, type ViewWillEnter } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 import {
-  chevronBackOutline,
-  chevronForwardOutline,
   cafeOutline,
   checkmarkCircleOutline,
-  timeOutline,
-  downloadOutline
+  chevronBackOutline,
+  chevronForwardOutline,
+  downloadOutline,
+  timeOutline
 } from 'ionicons/icons';
+
+import { AuthService } from '../../services/auth.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 // calendar day interface
 interface CalendarDay {
@@ -28,7 +31,6 @@ interface DtrRecord {
   status: 'verified' | 'provisional';
 }
 
-// dtr page
 @Component({
   selector: 'app-dtr',
   standalone: true,
@@ -36,43 +38,33 @@ interface DtrRecord {
   templateUrl: './dtr.page.html',
   styleUrls: ['./dtr.page.scss']
 })
-export class DtrPage {
+export class DtrPage implements ViewWillEnter, OnDestroy {
+  private readonly route = inject(ActivatedRoute);
+  private alertController = inject(AlertController);
+  private readonly supabaseService = inject(SupabaseService);
+  private readonly authService = inject(AuthService);
+  private supabase = this.supabaseService.getClient();
+
+  // Ensures the template re-evaluates bindings immediately after the async
+  // Supabase load, instead of waiting for a user click to trigger change detection.
+  private readonly cdRef = inject(ChangeDetectorRef);
+  private destroyed = false;
+
+  studentId = '';
 
   // calendar settings
   calendarMode: 'weekly' | 'monthly' = 'weekly';
-  selectedDate: Date = new Date(2026, 9, 28);
+  selectedDate: Date = new Date();
   weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
   // ojt hours
-  requiredHours = 456;
-  verifiedHours = 196.0;
-  provisionalHours = 16.5;
+  requiredHours = 486;
+  verifiedHours = 0.0;
+  provisionalHours = 0.0;
 
-  // demo attendance records
-  private demoRecords: DtrRecord[] = [
-    {
-      date: '2026-10-25',
-      timeIn: '8:00 AM',
-      timeOut: '5:00 PM',
-      status: 'verified'
-    },
-    {
-      date: '2026-10-26',
-      timeIn: '8:04 AM',
-      timeOut: '5:01 PM',
-      status: 'verified'
-    },
-    {
-      date: '2026-10-27',
-      timeIn: '7:58 AM',
-      timeOut: '5:06 PM',
-      status: 'provisional'
-    }
-  ];
+  records: DtrRecord[] = [];
 
-  records: DtrRecord[] = [...this.demoRecords];
-
-  constructor(private alertController: AlertController) {
+  constructor() {
     addIcons({
       chevronBackOutline,
       chevronForwardOutline,
@@ -83,9 +75,34 @@ export class DtrPage {
     });
   }
 
-  // refresh attendance on page entry
-  ionViewWillEnter(): void {
-    this.loadAttendance();
+  ngOnDestroy(): void {
+    this.destroyed = true;
+  }
+
+  private refresh(): void {
+    if (!this.destroyed) {
+      this.cdRef.detectChanges();
+    }
+  }
+
+  async ionViewWillEnter(): Promise<void> {
+    const id =
+      this.route.snapshot.queryParamMap.get('studentId') ||
+      this.authService.getStudentId() ||
+      localStorage.getItem('studentId');
+
+    if (!id) {
+      console.error('DTR: no student ID found. The login flow did not store it.');
+      this.studentId = '';
+      this.records = [];
+      this.verifiedHours = 0;
+      this.provisionalHours = 0;
+      this.refresh();
+      return;
+    }
+
+    this.studentId = id;
+    await this.loadAttendanceFromSupabase();
   }
 
   // format date key
@@ -169,7 +186,6 @@ export class DtrPage {
     return days;
   }
 
-  // calendar interactions
   setCalendarMode(mode: 'weekly' | 'monthly'): void {
     this.calendarMode = mode;
   }
@@ -207,7 +223,6 @@ export class DtrPage {
     }
   }
 
-  // calendar record status
   getMarker(date: string): 'verified' | 'provisional' | null {
     const record = this.records.find(item => item.date === date);
     return record?.status ?? null;
@@ -218,52 +233,77 @@ export class DtrPage {
     return this.records.find(record => record.date === selectedKey);
   }
 
-  // hour totals
   get totalHours(): number {
-    return this.verifiedHours + this.provisionalHours;
+    return parseFloat((this.verifiedHours + this.provisionalHours).toFixed(1));
   }
 
   get remainingHours(): number {
     return Math.max(0, this.requiredHours - this.totalHours);
   }
 
-  // load locally saved attendance
-  loadAttendance(): void {
-    this.records = [...this.demoRecords];
-
-    const saved = localStorage.getItem('interntrack_attendance_demo');
-    if (!saved) return;
-
+  // Load real logs from Supabase and calculate hours dynamically
+  async loadAttendanceFromSupabase(): Promise<void> {
     try {
-      const record = JSON.parse(saved);
+      const { data, error } = await this.supabase
+        .from('attendance')
+        .select('*')
+        .eq('student_id', this.studentId)
+        .order('created_at', { ascending: false });
 
-      if (
-        typeof record.date !== 'string' ||
-        typeof record.timeIn !== 'string' ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(record.date) ||
-        !record.timeIn
-      ) {
-        return;
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        let verifiedMinutes = 0;
+        let provisionalMinutes = 0;
+
+        this.records = data.map(row => {
+          const dateStr = row.created_at ? row.created_at.split('T')[0] : new Date().toISOString().split('T')[0];
+          const formattedIn = row.time_in ? new Date(row.time_in).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) : '--';
+          const formattedOut = row.time_out ? new Date(row.time_out).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) : '';
+
+          // Calculate hours if both time in and out exist
+          let minutes = 0;
+          if (row.time_in && row.time_out) {
+            const diffMs = new Date(row.time_out).getTime() - new Date(row.time_in).getTime();
+            if (diffMs > 0) {
+              minutes = Math.floor(diffMs / (1000 * 60));
+            }
+          }
+
+          // Separate verified vs provisional based on verification_status
+          const isVerified = row.verification_status === 'verified';
+          if (isVerified) {
+            verifiedMinutes += minutes;
+          } else {
+            provisionalMinutes += minutes;
+          }
+
+          return {
+            date: dateStr,
+            timeIn: formattedIn,
+            timeOut: formattedOut,
+            status: isVerified ? 'verified' : 'provisional'
+          };
+        });
+
+        this.verifiedHours = parseFloat((verifiedMinutes / 60).toFixed(1));
+        this.provisionalHours = parseFloat((provisionalMinutes / 60).toFixed(1));
+      } else {
+        // Reset state when no data
+        this.verifiedHours = 0;
+        this.provisionalHours = 0;
+        this.records = [];
       }
-
-      const localRecord: DtrRecord = {
-        date: record.date,
-        timeIn: record.timeIn,
-        timeOut: typeof record.timeOut === 'string' ? record.timeOut : '',
-        status: 'provisional'
-      };
-
-      this.records = this.records.filter(
-        item => item.date !== localRecord.date
-      );
-
-      this.records.push(localRecord);
-    } catch {
-      console.warn('Invalid local attendance record.');
+    } catch (err) {
+      console.error('DTR: loadAttendanceFromSupabase error:', err);
+      this.records = [];
+      this.verifiedHours = 0;
+      this.provisionalHours = 0;
+    } finally {
+      this.refresh();
     }
   }
 
-  // export dtr to csv
   exportDtr(): void {
     const header = ['Date', 'Time In', 'Time Out', 'Status'];
 
@@ -294,7 +334,7 @@ export class DtrPage {
     const link = document.createElement('a');
 
     link.href = url;
-    link.download = 'InternTrack-DTR-Demo.csv';
+    link.download = 'InternTrack-DTR-Live.csv';
 
     document.body.appendChild(link);
     link.click();
@@ -303,16 +343,15 @@ export class DtrPage {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  // preview dtr
   async previewDtr(): Promise<void> {
     const alert = await this.alertController.create({
-      header: 'DTR Preview',
+      header: 'Live DTR Preview',
       message:
         `Total Verified: ${this.verifiedHours.toFixed(1)} hrs` +
         `<br>Provisional: ${this.provisionalHours.toFixed(1)} hrs` +
         `<br>Total Completed: ${this.totalHours.toFixed(1)} hrs` +
         `<br>Required: ${this.requiredHours} hrs` +
-        `<br><br>Frontend demonstration only.`,
+        `<br><br>Synced directly with Supabase.`,
       buttons: ['Close']
     });
 

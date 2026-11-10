@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { IonContent, IonIcon, AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
 import {
   addOutline,
   createOutline,
@@ -10,8 +10,10 @@ import {
   chevronForwardOutline
 } from 'ionicons/icons';
 
+import { SupabaseService } from '../../services/supabase.service';
+
 // report interfaces
-type ReportStatus = 'draft' | 'approved' | 'returned';
+type ReportStatus = 'draft' | 'pending_review' | 'approved' | 'returned';
 
 interface WeeklyReport {
   id: number;
@@ -23,6 +25,16 @@ interface WeeklyReport {
   commentCount?: number;
   feedback?: string;
 }
+
+// empty placeholder for "no current draft"
+const emptyReport = (): WeeklyReport => ({
+  id: 0,
+  week: 0,
+  period: '',
+  status: 'draft',
+  editedLabel: '',
+  accomplishments: ''
+});
 
 // reports page
 @Component({
@@ -36,61 +48,22 @@ interface WeeklyReport {
   styleUrls: ['./reports.page.scss']
 })
 export class ReportsPage {
+  private readonly route = inject(ActivatedRoute);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private alertController = inject(AlertController);
+  private readonly supabaseService = inject(SupabaseService);
+  private supabase = this.supabaseService.getClient();
 
-  // local storage
-  private storageKey = 'interntrack_reports_demo';
+  studentId = '';
 
   // current week report
-  currentReport: WeeklyReport = {
-    id: 9,
-    week: 9,
-    period: 'Oct 26 - 30',
-    status: 'draft',
-    editedLabel: 'Edited today at 7:40 AM',
-    accomplishments: ''
-  };
+  currentReport: WeeklyReport = emptyReport();
 
   // previous reports
-  previousReports: WeeklyReport[] = [
-    {
-      id: 8,
-      week: 8,
-      period: 'Oct 19 - 23',
-      status: 'approved',
-      accomplishments:
-        'Completed assigned tasks and assisted the IT department.'
-    },
-    {
-      id: 7,
-      week: 7,
-      period: 'Oct 12 - 16',
-      status: 'returned',
-      commentCount: 1,
-      accomplishments:
-        'Assisted with troubleshooting and technical support.',
-      feedback:
-        'Please provide additional details about the tasks you completed.'
-    },
-    {
-      id: 6,
-      week: 6,
-      period: 'Oct 5 - 9',
-      status: 'approved',
-      accomplishments:
-        'Assisted the IT department with daily technical activities.'
-    },
-    {
-      id: 5,
-      week: 5,
-      period: 'Sep 28 - Oct 2',
-      status: 'approved',
-      accomplishments:
-        'Completed weekly tasks and submitted the required report.'
-    }
-  ];
+  previousReports: WeeklyReport[] = [];
 
   // register icons
-  constructor(private alertController: AlertController) {
+  constructor() {
     addIcons({
       addOutline,
       createOutline,
@@ -101,8 +74,21 @@ export class ReportsPage {
   }
 
   // load reports
-  ionViewWillEnter(): void {
-    this.loadReports();
+  async ionViewWillEnter(): Promise<void> {
+    const id =
+      this.route.snapshot.queryParamMap.get('studentId') ||
+      localStorage.getItem('studentId');
+
+    if (!id) {
+      console.error('Reports: no student ID found. The login flow did not store it.');
+      this.currentReport = emptyReport();
+      this.previousReports = [];
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.studentId = id;
+    await this.loadReports();
   }
 
   // report status label
@@ -113,6 +99,9 @@ export class ReportsPage {
 
       case 'returned':
         return 'Returned';
+
+      case 'pending_review':
+        return 'Pending Review';
 
       case 'draft':
         return 'Draft';
@@ -128,6 +117,9 @@ export class ReportsPage {
       case 'returned':
         return 'arrow-undo-outline';
 
+      case 'pending_review':
+        return 'time-outline';
+
       case 'draft':
         return 'create-outline';
     }
@@ -138,9 +130,9 @@ export class ReportsPage {
     const allWeeks = [
       this.currentReport.week,
       ...this.previousReports.map(report => report.week)
-    ];
+    ].filter(w => w > 0);
 
-    const nextWeek = Math.max(...allWeeks) + 1;
+    const nextWeek = allWeeks.length > 0 ? Math.max(...allWeeks) + 1 : 1;
 
     const alert = await this.alertController.create({
       header: 'Create Weekly Report',
@@ -168,7 +160,7 @@ export class ReportsPage {
         },
         {
           text: 'Create Draft',
-          handler: data => {
+          handler: async data => {
             const week = Number(data.week);
             const period = String(data.period || '').trim();
 
@@ -176,11 +168,10 @@ export class ReportsPage {
               return false;
             }
 
-            // keep previous draft
-            this.previousReports = [
-              { ...this.currentReport },
-              ...this.previousReports
-            ];
+            // Save previous draft to Supabase if it exists
+            if (this.currentReport.week > 0) {
+              await this.saveReportToSupabase(this.currentReport);
+            }
 
             // create current draft
             this.currentReport = {
@@ -192,8 +183,58 @@ export class ReportsPage {
               accomplishments: ''
             };
 
-            this.saveReports();
+            await this.saveReportToSupabase(this.currentReport);
+            await this.loadReports();
             return true;
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  // submit current report for review
+  async submitReport(): Promise<void> {
+    if (!this.currentReport.week || this.currentReport.week === 0) {
+      const alert = await this.alertController.create({
+        header: 'No Report',
+        message: 'Please create a report first.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (this.currentReport.status === 'pending_review' || this.currentReport.status === 'approved') {
+      const alert = await this.alertController.create({
+        header: 'Cannot Submit',
+        message: `This report is already ${this.getStatusLabel(this.currentReport.status).toLowerCase()}.`,
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Submit Report',
+      message: 'Are you sure you want to submit this report for supervisor review?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Submit',
+          handler: async () => {
+            this.currentReport = {
+              ...this.currentReport,
+              status: 'pending_review',
+              editedLabel: 'Submitted just now'
+            };
+
+            await this.saveReportToSupabase(this.currentReport);
+            await this.loadReports();
           }
         }
       ]
@@ -226,7 +267,7 @@ export class ReportsPage {
         },
         {
           text: 'Save Draft',
-          handler: data => {
+          handler: async data => {
             this.currentReport = {
               ...this.currentReport,
               accomplishments: String(
@@ -235,7 +276,8 @@ export class ReportsPage {
               editedLabel: 'Edited just now'
             };
 
-            this.saveReports();
+            await this.saveReportToSupabase(this.currentReport);
+            await this.loadReports();
             return true;
           }
         }
@@ -249,77 +291,134 @@ export class ReportsPage {
   async openReport(report: WeeklyReport): Promise<void> {
     const status = this.getStatusLabel(report.status);
 
-    const accomplishments = this.escapeHtml(
-      report.accomplishments || 'No accomplishments recorded.'
-    ).replace(/\n/g, '<br>');
+    const accomplishments = report.accomplishments || 'No accomplishments recorded.';
 
-    const feedback = report.feedback
-      ? `<br><br><strong>Supervisor Feedback:</strong><br>` +
-        this.escapeHtml(report.feedback)
-      : '';
+    let message = `Status: ${status}\n\nAccomplishments:\n${accomplishments}`;
+
+    if (report.feedback) {
+      message += `\n\nSupervisor Feedback:\n${report.feedback}`;
+    }
 
     const alert = await this.alertController.create({
       header: `Week ${report.week} Report`,
       subHeader: report.period,
-      message:
-        `<strong>Status:</strong> ${status}` +
-        `<br><br>` +
-        `<strong>Accomplishments:</strong><br>` +
-        accomplishments +
-        feedback,
+      message: message,
       buttons: ['Close']
     });
 
     await alert.present();
   }
 
-  // escape html content
-  private escapeHtml(value: string): string {
-    const entities: Record<string, string> = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;'
-    };
-
-    return value.replace(
-      /[&<>"']/g,
-      character => entities[character]
-    );
-  }
-
-  // save reports locally
-  private saveReports(): void {
-    const data = {
-      currentReport: this.currentReport,
-      previousReports: this.previousReports
-    };
-
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify(data)
-    );
-  }
-
-  // load saved reports
-  private loadReports(): void {
-    const saved = localStorage.getItem(this.storageKey);
-    if (!saved) return;
-
+  // save report to Supabase
+  private async saveReportToSupabase(report: WeeklyReport): Promise<void> {
     try {
-      const data = JSON.parse(saved);
+      // First check if report already exists
+      const { data: existing, error: lookupError } = await this.supabase
+        .from('reports')
+        .select('id')
+        .eq('student_id', this.studentId)
+        .eq('week', report.week)
+        .maybeSingle();
 
-      if (
-        data.currentReport &&
-        typeof data.currentReport.week === 'number' &&
-        Array.isArray(data.previousReports)
-      ) {
-        this.currentReport = data.currentReport;
-        this.previousReports = data.previousReports;
+      if (lookupError) throw lookupError;
+
+      if (existing) {
+        // Update existing report
+        const updateData: any = {
+          period: report.period,
+          status: report.status,
+          accomplishments: report.accomplishments || '',
+          feedback: report.feedback || '',
+          comment_count: report.commentCount || 0
+        };
+
+        // Set submitted_at when submitting for review
+        if (report.status === 'pending_review') {
+          updateData.submitted_at = new Date().toISOString();
+        }
+
+        const { error } = await this.supabase
+          .from('reports')
+          .update(updateData)
+          .eq('id', existing.id);
+
+        if (error) throw error;
+      } else {
+        // Insert new report
+        const insertData: any = {
+          student_id: this.studentId,
+          week: report.week,
+          period: report.period,
+          status: report.status,
+          accomplishments: report.accomplishments || '',
+          feedback: report.feedback || '',
+          comment_count: report.commentCount || 0
+        };
+
+        // Set submitted_at when submitting for review
+        if (report.status === 'pending_review') {
+          insertData.submitted_at = new Date().toISOString();
+        }
+
+        const { error } = await this.supabase
+          .from('reports')
+          .insert(insertData);
+
+        if (error) throw error;
       }
-    } catch {
-      console.warn('Unable to load saved demo reports.');
+    } catch (err) {
+      console.error('Error saving report to Supabase:', err);
+      const errorAlert = await this.alertController.create({
+        header: 'Error',
+        message: 'Failed to save report: ' + (err as any).message,
+        buttons: ['OK']
+      });
+      await errorAlert.present();
+    }
+  }
+
+  // load reports from Supabase
+  private async loadReports(): Promise<void> {
+    try {
+      const { data, error } = await this.supabase
+        .from('reports')
+        .select('*')
+        .eq('student_id', this.studentId)
+        .order('week', { ascending: false });
+
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        const reports: WeeklyReport[] = data.map(row => ({
+          id: row.id,
+          week: row.week,
+          period: row.period,
+          status: row.status as ReportStatus,
+          accomplishments: row.accomplishments || '',
+          feedback: row.feedback || '',
+          commentCount: row.comment_count || 0,
+          editedLabel: 'Edited recently'
+        }));
+
+        // Set current report (most recent draft, pending_review, or returned)
+        const editableReport = reports.find(r => r.status === 'draft' || r.status === 'returned' || r.status === 'pending_review');
+        if (editableReport) {
+          this.currentReport = editableReport;
+          this.previousReports = reports.filter(r => r.id !== editableReport.id);
+        } else {
+          this.currentReport = emptyReport();
+          this.previousReports = reports;
+        }
+      } else {
+        // No reports found, initialize empty
+        this.currentReport = emptyReport();
+        this.previousReports = [];
+      }
+    } catch (err) {
+      console.error('Error loading reports from Supabase:', err);
+    } finally {
+      // Tell Angular to redraw, since the data arrived after the first render
+      this.cdr.detectChanges();
     }
   }
 }

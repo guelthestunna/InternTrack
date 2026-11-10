@@ -21,10 +21,10 @@
       <div class="attendance-header">
         <div class="attendance-info">
           <p>Today's Attendance</p>
-          <h2>Not timed in yet</h2>
+          <h2>{{ todayStatusText }}</h2>
         </div>
 
-        <span class="attendance-time">8:01 am</span>
+        <span class="attendance-time">{{ currentLiveTime }}</span>
       </div>
 
       <!-- time in button -->
@@ -33,7 +33,7 @@
         class="time-in-button"
         routerLink="/tabs/attendance">
         <ion-icon name="camera-outline"></ion-icon>
-        <span>Time In</span>
+        <span>{{ isTimedInToday ? 'View Attendance Status' : 'Time In' }}</span>
       </button>
 
       <p class="attendance-note">
@@ -107,6 +107,7 @@
     <section class="todo-section">
       <h2 class="section-title">To Do</h2>
 
+      @if (currentReportWeek > 0) {
       <button
         type="button"
         class="todo-card"
@@ -117,17 +118,38 @@
         </div>
 
         <div class="todo-details">
-          <h3>Week 9 Report</h3>
-          <p>Due Fri, Oct 30</p>
+          <h3>Week {{ currentReportWeek }} Report</h3>
+          <p>{{ currentReportPeriod }}</p>
         </div>
 
-        <span class="draft-badge">Draft</span>
+        <span class="draft-badge">{{ currentReportStatus === 'draft' ? 'Draft' : currentReportStatus }}</span>
 
         <ion-icon
           name="chevron-forward-outline"
           class="todo-arrow">
         </ion-icon>
       </button>
+      } @else {
+      <button
+        type="button"
+        class="todo-card"
+        routerLink="/tabs/reports">
+
+        <div class="todo-icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+
+        <div class="todo-details">
+          <h3>No Pending Reports</h3>
+          <p>Create a new weekly report</p>
+        </div>
+
+        <ion-icon
+          name="chevron-forward-outline"
+          class="todo-arrow">
+        </ion-icon>
+      </button>
+      }
     </section>
 
     <!-- recent activities -->
@@ -136,14 +158,15 @@
         <h2 class="section-title">Recent Activities</h2>
 
         <button
-          type="button"
-          class="see-all"
-          (click)="toggleActivities()">
-          {{ showAllActivities ? 'See Less' : 'See All' }}
-        </button>
+    type="button"
+    class="see-all"
+     (click)="toggleActivities()">
+     {{ showAllActivities ? 'See Less' : 'See All' }}
+    </button>
       </div>
 
       <!-- activities list -->
+      @if (showAllActivities) {
       <div class="activities-card">
         @for (activity of displayedActivities; track activity.id) {
           <div class="activity-item">
@@ -161,6 +184,7 @@
           </div>
         }
       </div>
+      }
     </section>
 
   </main>

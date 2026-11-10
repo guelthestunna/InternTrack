@@ -35,6 +35,26 @@
       }
     }
 
+    <!-- online status indicator -->
+    @if (isOnline && offlineSyncService.getPendingRecords().length > 0) {
+      <section class="pending-sync-banner">
+        <p>{{ offlineSyncService.getPendingRecords().length }} offline record(s) pending sync</p>
+        <button type="button" class="sync-now-button" (click)="syncPendingRecords()">
+          Sync Now
+        </button>
+      </section>
+    }
+
+    <!-- failed records retry -->
+    @if (isOnline && offlineSyncService.getFailedRecords().length > 0) {
+      <section class="failed-sync-banner">
+        <p>{{ offlineSyncService.getFailedRecords().length }} record(s) failed to sync</p>
+        <button type="button" class="retry-failed-button" (click)="retryFailedSync()">
+          Retry Failed
+        </button>
+      </section>
+    }
+
     <!-- attendance card -->
     <section class="attendance-card">
 
@@ -57,6 +77,24 @@
         </span>
       </div>
 
+      <!-- hidden file input for photo capture evidence -->
+      <input 
+        type="file" 
+        accept="image/*" 
+        capture="environment" 
+        style="display: none;" 
+        #fileInput 
+        (change)="handlePhotoCapture($event)" />
+
+      <!-- hidden file input for time out photo -->
+      <input 
+        type="file" 
+        accept="image/*" 
+        capture="environment" 
+        style="display: none;" 
+        #timeOutFileInput 
+        (change)="handleTimeOutPhotoCapture($event)" />
+
       <!-- attendance actions -->
       <div class="attendance-actions">
 
@@ -64,8 +102,8 @@
           type="button"
           class="time-in-button"
           [disabled]="!!timeIn"
-          (click)="recordTimeIn()">
-          <ion-icon name="log-in-outline"></ion-icon>
+          (click)="fileInput.click()">
+          <ion-icon name="camera-outline"></ion-icon>
           <span>Time In</span>
         </button>
 
@@ -73,7 +111,7 @@
           type="button"
           class="time-out-button"
           [disabled]="!timeIn || !!timeOut"
-          (click)="recordTimeOut()">
+          (click)="timeOutFileInput.click()">
           <ion-icon name="log-out-outline"></ion-icon>
           <span>Time Out</span>
         </button>
@@ -128,7 +166,7 @@
 
       <!-- sync information -->
       <p class="last-synced">
-        Demo attendance records · Server sync not connected
+        Live Supabase Database Synchronization Active
       </p>
 
     </section>

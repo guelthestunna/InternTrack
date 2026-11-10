@@ -33,23 +33,61 @@
 
       <form (ngSubmit)="login()">
 
-        <!-- student id -->
+        <!-- role selector -->
         <div class="form-group">
-          <label for="studentId">
-            Student ID <span>*</span>
+          <label for="role">
+            Role <span>*</span>
           </label>
 
           <div class="input-container">
             <ion-icon name="person-circle-outline"></ion-icon>
 
-            <input
-              id="studentId"
-              type="text"
-              name="studentId"
-              [(ngModel)]="studentId"
-              placeholder="2#-#####"
-              autocomplete="username"
-            />
+            <select
+              id="role"
+              name="role"
+              [(ngModel)]="selectedRole"
+              class="role-select">
+              <option value="student_intern">Student Intern</option>
+              <option value="company_supervisor">Company Supervisor</option>
+              <option value="ojt_coordinator">OJT Coordinator</option>
+            </select>
+
+            <ion-icon name="chevron-down-outline" class="dropdown-arrow"></ion-icon>
+          </div>
+        </div>
+
+        <!-- student id / email -->
+        <div class="form-group">
+          <label for="studentIdOrEmail">
+            @if (selectedRole === 'student_intern') {
+              Student ID
+            } @else {
+              Email
+            } <span>*</span>
+          </label>
+
+          <div class="input-container">
+            <ion-icon name="person-circle-outline"></ion-icon>
+
+            @if (selectedRole === 'student_intern') {
+              <input
+                id="studentIdOrEmail"
+                type="text"
+                name="studentIdOrEmail"
+                [(ngModel)]="studentIdOrEmail"
+                placeholder="2#-#####"
+                autocomplete="username"
+              />
+            } @else {
+              <input
+                id="studentIdOrEmail"
+                type="email"
+                name="studentIdOrEmail"
+                [(ngModel)]="studentIdOrEmail"
+                placeholder="email@example.com"
+                autocomplete="email"
+              />
+            }
           </div>
         </div>
 
@@ -103,8 +141,13 @@
         <!-- login button -->
         <button
           type="submit"
-          class="login-button">
-          LOG IN
+          class="login-button"
+          [disabled]="isLoading">
+          @if (isLoading) {
+            LOGGING IN...
+          } @else {
+            LOG IN
+          }
         </button>
 
       </form>

@@ -32,20 +32,57 @@
           </p>
         </div>
 
-        <!-- draft status -->
-        <span class="draft-badge">
-          <ion-icon name="create-outline"></ion-icon>
-          Draft
+        <!-- status badge -->
+        <span
+          class="status-badge"
+          [class.draft]="currentReport.status === 'draft'"
+          [class.pending-review]="currentReport.status === 'pending_review'"
+          [class.approved]="currentReport.status === 'approved'"
+          [class.returned]="currentReport.status === 'returned'">
+          <ion-icon [name]="getStatusIcon(currentReport.status)"></ion-icon>
+          {{ getStatusLabel(currentReport.status) }}
         </span>
       </div>
 
-      <!-- continue editing -->
-      <button
-        type="button"
-        class="continue-button"
-        (click)="editCurrentReport()">
-        Continue Editing
-      </button>
+      <!-- supervisor feedback for returned reports -->
+      @if (currentReport.status === 'returned' && currentReport.feedback) {
+        <div class="feedback-section">
+          <h4>Supervisor Feedback:</h4>
+          <p>{{ currentReport.feedback }}</p>
+        </div>
+      }
+
+      <!-- action buttons -->
+      <div class="action-buttons">
+        @if (currentReport.status === 'draft' || currentReport.status === 'returned') {
+          <button
+            type="button"
+            class="edit-button"
+            (click)="editCurrentReport()">
+            {{ currentReport.status === 'returned' ? 'Revise & Edit' : 'Continue Editing' }}
+          </button>
+          <button
+            type="button"
+            class="submit-button"
+            (click)="submitReport()">
+            Submit for Review
+          </button>
+        } @else if (currentReport.status === 'pending_review') {
+          <button
+            type="button"
+            class="disabled-button"
+            disabled>
+            Pending Supervisor Review
+          </button>
+        } @else if (currentReport.status === 'approved') {
+          <button
+            type="button"
+            class="disabled-button"
+            disabled>
+            Report Approved
+          </button>
+        }
+      </div>
 
     </section>
 

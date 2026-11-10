@@ -148,67 +148,7 @@
   color: #aaaaaa;
 }
 
-// draft badge
-.draft-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 59px;
-  height: 22px;
-
-  gap: 4px;
-  padding: 0 9px;
-
-  background: #ededed;
-  color: #a8a8a8;
-
-  border-radius: 100px;
-  box-sizing: border-box;
-
-  font-size: 9px;
-  font-weight: 400;
-
-  white-space: nowrap;
-}
-
-.draft-badge ion-icon {
-  font-size: 11px;
-  color: #b1b1b1;
-}
-
-// continue editing button
-.continue-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 36px;
-
-  margin-top: auto;
-
-  border: none;
-  border-radius: 7px;
-
-  background: #d6dfff;
-  color: #3157d5;
-
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.continue-button:active {
-  background: #becdff;
-  transform: scale(0.98);
-}
+// status badge (replaces draft-badge)
 
 // previous reports section
 .previews-section {
@@ -337,6 +277,163 @@
   --ionicon-stroke-width: 40px;
 }
 
+// status badge
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 59px;
+  height: 22px;
+
+  gap: 4px;
+  padding: 0 9px;
+
+  border-radius: 100px;
+  box-sizing: border-box;
+
+  font-size: 9px;
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.status-badge ion-icon {
+  font-size: 11px;
+}
+
+.status-badge.draft {
+  background: #ededed;
+  color: #a8a8a8;
+}
+
+.status-badge.pending-review {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.returned {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+// feedback section
+.feedback-section {
+  margin-top: 12px;
+  padding: 10px;
+  background: #fff3cd;
+  border-radius: 8px;
+  border-left: 3px solid #ffc107;
+}
+
+.feedback-section h4 {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #856404;
+}
+
+.feedback-section p {
+  margin: 0;
+  font-size: 10px;
+  color: #856404;
+  line-height: 1.4;
+}
+
+// action buttons container
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.edit-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #d6dfff;
+  color: #3157d5;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.edit-button:active {
+  background: #becdff;
+  transform: scale(0.98);
+}
+
+.submit-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #3157d5;
+  color: #ffffff;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.submit-button:active {
+  background: #2448b8;
+  transform: scale(0.98);
+}
+
+.disabled-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
+
+  border: none;
+  border-radius: 7px;
+
+  background: #e9ecef;
+  color: #6c757d;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: not-allowed;
+}
+
 // report status states
 .report-status.approved {
   background: #c8e2ff;
@@ -353,6 +450,11 @@
   color: #a8a8a8;
 }
 
+.report-status.pending-review {
+  background: #fff3cd;
+  color: #856404;
+}
+
 // report arrow
 .report-arrow {
   font-size: 18px;
@@ -364,7 +466,8 @@
 
 // keyboard accessibility
 .create-report-button:focus-visible,
-.continue-button:focus-visible,
+.edit-button:focus-visible,
+.submit-button:focus-visible,
 .report-row:focus-visible {
   outline: 2px solid #3157d5;
   outline-offset: 3px;

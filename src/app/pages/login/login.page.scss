@@ -253,6 +253,49 @@
   opacity: 1;
 }
 
+// role select styling
+.input-container select.role-select {
+  flex: 1;
+
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+
+  color: #252525;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.input-container select.role-select option {
+  background: #ffffff;
+  color: #252525;
+  padding: 8px;
+}
+
+// dropdown arrow
+.input-container .dropdown-arrow {
+  font-size: 16px;
+  color: #999ba2;
+  flex-shrink: 0;
+  --ionicon-stroke-width: 32px;
+  pointer-events: none;
+}
+
 // password toggle
 .password-toggle {
   display: flex;

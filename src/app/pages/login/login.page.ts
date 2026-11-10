@@ -1,15 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonIcon, AlertController } from '@ionic/angular';
+import { AlertController, IonContent, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+import { personCircleOutline, lockClosedOutline, eyeOutline, eyeOffOutline, chevronDownOutline } from 'ionicons/icons';
 
-import {
-  personCircleOutline,
-  lockClosedOutline,
-  eyeOutline,
-  eyeOffOutline
-} from 'ionicons/icons';
+import { AuthService } from '../../services/auth.service';
 
 // login page
 @Component({
@@ -25,26 +21,23 @@ import {
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage {
-
   // login credentials
-  studentId = '';
+  studentIdOrEmail = '';
   password = '';
+  selectedRole = 'student_intern';
 
   // form state
   showPassword = false;
   errorMessage = '';
+  isLoading = false;
 
   // register icons
-  constructor(
-    private router: Router,
-    private alertController: AlertController
-  ) {
-    addIcons({
-      personCircleOutline,
-      lockClosedOutline,
-      eyeOutline,
-      eyeOffOutline
-    });
+  private readonly router = inject(Router);
+  private readonly alertController = inject(AlertController);
+  private readonly authService = inject(AuthService);
+
+  constructor() {
+    addIcons({personCircleOutline,chevronDownOutline,lockClosedOutline,eyeOutline,eyeOffOutline});
   }
 
   // toggle password visibility
@@ -53,16 +46,47 @@ export class LoginPage {
   }
 
   // login
-  login(): void {
-    if (!this.studentId.trim() || !this.password.trim()) {
-      this.errorMessage = 'Please enter your Student ID and password.';
+  async login(): Promise<void> {
+    if (!this.studentIdOrEmail.trim() || !this.password.trim()) {
+      this.errorMessage = 'Please enter your credentials.';
       return;
     }
 
     this.errorMessage = '';
+    this.isLoading = true;
 
-    // frontend demo only
-    this.router.navigateByUrl('/tabs/home');
+    console.log('Login attempt - Role:', this.selectedRole);
+    console.log('Login attempt - Student ID/Email:', this.studentIdOrEmail.trim());
+
+    try {
+      let result: { success: boolean; error?: string };
+
+      // If student role, use secure student ID login via Edge Function
+      if (this.selectedRole === 'student_intern') {
+        result = await this.authService.signInWithStudentId(
+          this.studentIdOrEmail.trim(),
+          this.password
+        );
+      } else {
+        // For supervisors/coordinators, use email/password directly
+        result = await this.authService.signIn(
+          this.studentIdOrEmail.trim(),
+          this.password
+        );
+      }
+
+      console.log('Login result:', result);
+
+      if (!result.success) {
+        this.errorMessage = result.error || 'Login failed. Please try again.';
+        this.isLoading = false;
+      }
+      // If successful, auth service will redirect based on role
+    } catch (error: any) {
+      console.error('Login error:', error);
+      this.errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+      this.isLoading = false;
+    }
   }
 
   // forgot password
